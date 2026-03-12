@@ -204,6 +204,15 @@ tf_ts_library(
     ],
 )
 
+# This is a dummy rule used as a @angular/material/list dependency.
+tf_ts_library(
+    name = "expect_angular_material_list",
+    srcs = [],
+    deps = [
+        "@npm//@angular/material",
+    ],
+)
+
 # This is a dummy rule used as a @angular/material/menu dependency.
 tf_ts_library(
     name = "expect_angular_material_menu",
