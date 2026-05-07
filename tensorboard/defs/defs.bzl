@@ -249,45 +249,6 @@ def tf_svg_bundle(name, srcs, out):
         ],
     )
 
-def tf_sass_binary(deps = [], include_paths = [], strict_deps = True, **kwargs):
-    """TensorBoard wrap for declaring SASS binary.
-
-    It adds dependency on theme by default then add include Angular material
-    theme library paths for better node_modules library resolution.
-
-    strict_deps is included here and intentionally ignored so it can be used
-    internally.
-    """
-    sass_binary(
-        deps = deps,
-        include_paths = include_paths + [
-            "external/npm/node_modules",
-        ],
-        sourcemap = False,
-        **kwargs
-    )
-
-def tf_sass_library(**kwargs):
-    """TensorBoard wrap for declaring SASS library.
-
-    It re-exports the sass_libray symbol so users do not have to depend on
-    "@io_bazel_rules_sass//:defs.bzl".
-    """
-    sass_library(
-        **kwargs
-    )
-
-def tf_external_sass_libray(**kwargs):
-    """TensorBoard wrapper for declaring external SASS dependency.
-
-    When an external (NPM) package have SASS files that has `import` statements,
-    TensorBoard has to depdend on them very specifically. This rule allows SASS
-    modules in NPM packages to be built properly.
-    """
-    npm_sass_library(
-        **kwargs
-    )
-
 def tf_ng_module(assets = [], **kwargs):
     """TensorBoard wrapper for Angular modules."""
     tf_ts_library(

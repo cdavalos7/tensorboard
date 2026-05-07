@@ -1,10 +1,10 @@
-load("//tensorboard/defs:defs.bzl", "tf_sass_library")
+load("@io_bazel_rules_sass//:defs.bzl", "sass_library")
 
 package(default_visibility = ["//tensorboard:internal"])
 
 licenses(["notice"])
 
-tf_sass_library(
+sass_library(
     name = "theme",
     srcs = [
         "_tb_palette.scss",
