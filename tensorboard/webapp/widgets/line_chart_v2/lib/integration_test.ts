@@ -465,6 +465,20 @@ describe('line_chart_v2/lib/integration test', () => {
   describe('webgl', () => {
     it('invokes onContextLost after losing webgl context', async () => {
       const canvas = document.createElement('canvas');
+
+      // chrome 123 headless on macos arm64 has no gpu so THREE.WebGLRenderer
+      // throws inside ChartImpl ctor before we even reach the extension check
+      // probe first so we can skip with pending instead of blowing up the suite
+      const probe = document.createElement('canvas');
+      if (!probe.getContext('webgl') && !probe.getContext('webgl2')) {
+        console.log(
+          'The browser used for testing does not ' +
+            'support WebGL or extensions needed for testing.'
+        );
+        pending('WebGL not available in this environment');
+        return;
+      }
+
       chart = new ChartImpl({
         type: RendererType.WEBGL,
         container: canvas,

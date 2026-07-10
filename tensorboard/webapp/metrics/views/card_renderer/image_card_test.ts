@@ -132,9 +132,8 @@ describe('image card', () => {
     expect(
       imgEl.nativeElement.src.endsWith(`/imageData?imageId=${imageId}`)
     ).toBe(true);
-    expect(thumb.nativeElement.getAttribute('ng-reflect-value')).toBe(
-      stepIndex?.toString()
-    );
+    // angular 20 dropped ng-reflect attrs so we read from nativeElement now
+    expect(thumb.nativeElement.value).toBe(stepIndex?.toString());
   }
 
   it('renders empty message when there is no data', () => {

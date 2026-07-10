@@ -219,10 +219,13 @@ def tf_ng_web_test_suite(name, deps = [], external = [], **kwargs):
         run_angular_linker = False,
         platform = "browser",
         external = external,
+        target = "es2021",
     )
 
     karma_web_test_suite(
         name = name,
+        browsers = ["//tensorboard/tools/browsers:chromium-local"],
+        tags = ["native"],
         bootstrap =
             [
                 "@npm//:node_modules/zone.js/bundles/zone.umd.js",

@@ -14,7 +14,12 @@ limitations under the License.
 ==============================================================================*/
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
 import {By} from '@angular/platform-browser';
@@ -107,20 +112,21 @@ describe('range input test', () => {
   });
 
   describe('slider', () => {
-    it('uses correct values in slider', () => {
+    it('uses correct values in slider', fakeAsync(() => {
       const {fixture} = createComponent({
         lowerValue: 2,
         upperValue: 3,
       });
+      // MatSliderThumb sets the initial value async thru NgModel so tick is
+      // needed before nativeElement.value is ready. also angular 20 dropped
+      // ng-reflect attrs so we read from nativeElement directly
+      tick();
+      fixture.detectChanges();
 
       let thumbs = fixture.debugElement.queryAll(By.css('mat-slider input'));
-      expect(thumbs[0].nativeElement.getAttribute('ng-reflect-model')).toEqual(
-        '2'
-      );
-      expect(thumbs[1].nativeElement.getAttribute('ng-reflect-model')).toEqual(
-        '3'
-      );
-    });
+      expect(thumbs[0].nativeElement.value).toEqual('2');
+      expect(thumbs[1].nativeElement.value).toEqual('3');
+    }));
 
     it('dispatches actions when slider emits valueChange event', () => {
       const {fixture, onRangeValuesChanged} = createComponent({
@@ -150,9 +156,8 @@ describe('range input test', () => {
       });
 
       const slider = fixture.debugElement.queryAll(By.css('mat-slider'))[0];
-      expect(slider.nativeElement.getAttribute('ng-reflect-step')).toEqual(
-        '0.5'
-      );
+      // angular 20 dropped ng-reflect attrs so we read step from componentInstance
+      expect(slider.componentInstance.step).toBe(0.5);
     });
   });
 
