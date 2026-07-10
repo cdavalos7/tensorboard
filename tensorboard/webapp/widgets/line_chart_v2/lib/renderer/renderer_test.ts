@@ -325,9 +325,8 @@ describe('line_chart_v2/lib/renderer test', () => {
     }
 
     beforeEach(() => {
-      // chrome 123 headless on macos arm64 has no gpu so ThreeRenderer ctor
-      // throws on webgl context creation. we probe first and call pending
-      // to skip gracefully instead of crashing the whole suite
+      // webgl context creation fails on macos arm64 headless so we probe first
+      // and call pending to skip gracefully instead of crashing the whole suite
       const probe = document.createElement('canvas');
       if (!probe.getContext('webgl') && !probe.getContext('webgl2')) {
         pending('WebGL not available in this environment');
