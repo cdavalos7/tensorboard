@@ -272,7 +272,9 @@ describe('Timeline Container', () => {
           const [slider] = sliders;
           // angular 20 dropped ng-reflect attrs so we read min and max from componentInstance
           expect(slider.componentInstance.min).toBe(0);
-          expect(slider.componentInstance.max).toBe(numExecutions - displayCount);
+          expect(slider.componentInstance.max).toBe(
+            numExecutions - displayCount
+          );
           const thumb = slider.query(By.css('input'));
           expect(thumb.attributes['aria-valuetext']).toBe(
             String(scrollBeginIndex)
