@@ -888,6 +888,7 @@ describe('histogram test', () => {
         fixture.componentInstance.mode = HistogramMode.OVERLAY;
         fixture.componentInstance.timeProperty = TimeProperty.STEP;
         fixture.detectChanges();
+        mockContentRect(fixture);
         intersectionObserver.simulateVisibilityChange(fixture, true);
 
         const tooltipData = simulateMouseMove(fixture, 1, 5, 10);
@@ -1349,22 +1350,25 @@ describe('histogram test', () => {
           }
         );
         fixture.detectChanges();
+        mockContentRect(fixture);
         intersectionObserver.simulateVisibilityChange(fixture, true);
-        const testController = fixture.debugElement.query(
+        const cardFobDebugEl = fixture.debugElement.query(
           By.directive(CardFobControllerComponent)
-        ).componentInstance;
-        const fobStartPosition = testController.root.nativeElement
-          .querySelector('.time-fob-wrapper')
-          .getBoundingClientRect().top;
-
-        // Simulate dragging fob to step 10.
+        );
+        const testController = cardFobDebugEl.componentInstance;
+        // rootTop offsets clientY so mousePosition = clientY - rootTop stays
+        // viewport-independent. with mockContentRect height=50 offset mode:
+        // temporalScale maps step 5 to 23.75 and step 10 to 27.5
+        // so position 25 relative to root lands on step 10
+        const rootTop =
+          cardFobDebugEl.nativeElement.getBoundingClientRect().top;
         testController.startDrag(
           Fob.START,
           TimeSelectionAffordance.FOB,
           new MouseEvent('mouseDown')
         );
         const fakeEvent = new MouseEvent('mousemove', {
-          clientY: 5 + fobStartPosition, // Add the difference between step 5 and 10, which is equal to 5.
+          clientY: rootTop + 25,
           movementY: 1,
         });
         testController.mouseMove(fakeEvent);
