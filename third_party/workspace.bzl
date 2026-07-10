@@ -41,77 +41,11 @@ def tensorboard_workspace(name = ""):
         actual = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
     )
 
-    # We use our own browser definition based on the archives defined below, but
-    # this seems to be required by the rules_webtesting dependency.
+    # browser_repositories registers the Chrome 122/123 binaries for all
+    # platforms via browsers-0.3.4.bzl. the old per-platform platform_archive
+    # calls that used to live here (Chrome 84) were removed because they
+    # override the newer versions when called after browser_repositories.
     browser_repositories(chromium = True)
-
-    # Chromium browser for multiple platforms, pinned to Chromium 84.0.4147.0.
-    platform_archive(
-        name = "org_chromium_chromium_linux_x64",
-        licenses = ["notice"],  # BSD 3-clause (maybe more?)
-        sha256 = "49b25bf32b797558eb7957ac7c60e065433bdef278f669291f71edd329505e27",
-        urls = [
-            "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/768959/chrome-linux.zip",
-        ],
-        named_files = {
-            "CHROMIUM": "chrome-linux/chrome",
-        },
-    )
-
-    platform_archive(
-        name = "org_chromium_chromium_macos",
-        licenses = ["notice"],  # BSD 3-clause (maybe more?)
-        sha256 = "f0c7dc5c26061e2f179d1cb9819cb786d2c37cca9f53155e57ac2b6ab60c5cbc",
-        urls = [
-            "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Mac/768938/chrome-mac.zip",
-        ],
-        named_files = {
-            "CHROMIUM": "chrome-mac/Chromium.app/Contents/MacOS/chromium",
-        },
-    )
-
-    platform_archive(
-        name = "org_chromium_chromium_windows",
-        licenses = ["notice"],  # BSD 3-clause (maybe more?)
-        sha256 = "f441a079046a35afc249a95d29356f33945c0a60b59236b9cf6db532c69dba6f",
-        urls = [
-            "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/768952/chrome-win.zip",
-        ],
-        named_files = {
-            "CHROMIUM": "chrome-win/chrome.exe",
-        },
-    )
-
-    # Chromium webdriver for multiple platforms.
-    platform_archive(
-        name = "org_chromium_chromedriver_linux_x64",
-        licenses = ["reciprocal"],  # BSD 3-clause, ICU, MPL 1.1, libpng (BSD/MIT-like), Academic Free License v. 2.0, BSD 2-clause, MIT
-        sha256 = "71eafe087900dbca4bc0b354a1d172df48b31a4a502e21f7c7b156d7e76c95c7",
-        urls = [
-            "https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip",
-        ],
-        named_files = {"CHROMEDRIVER": "chromedriver"},
-    )
-
-    platform_archive(
-        name = "org_chromium_chromedriver_macos",
-        licenses = ["reciprocal"],  # BSD 3-clause, ICU, MPL 1.1, libpng (BSD/MIT-like), Academic Free License v. 2.0, BSD 2-clause, MIT
-        sha256 = "fd32a27148f44796a55f5ce3397015c89ebd9f600d9dda2bcaca54575e2497ae",
-        urls = [
-            "https://chromedriver.storage.googleapis.com/2.41/chromedriver_mac64.zip",
-        ],
-        named_files = {"CHROMEDRIVER": "chromedriver"},
-    )
-
-    platform_archive(
-        name = "org_chromium_chromedriver_windows",
-        licenses = ["reciprocal"],  # BSD 3-clause, ICU, MPL 1.1, libpng (BSD/MIT-like), Academic Free License v. 2.0, BSD 2-clause, MIT
-        sha256 = "a8fa028acebef7b931ef9cb093f02865f9f7495e49351f556e919f7be77f072e",
-        urls = [
-            "https://chromedriver.storage.googleapis.com/2.38/chromedriver_win32.zip",
-        ],
-        named_files = {"CHROMEDRIVER": "chromedriver"},
-    )
 
     java_import_external(
         name = "org_apache_commons_lang3",
