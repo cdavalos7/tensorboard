@@ -446,9 +446,6 @@ describe('metrics right_pane', () => {
         const fixture = TestBed.createComponent(SettingsViewContainer);
         fixture.detectChanges();
 
-        // angular 20 dropped ng-reflect attrs so we cant use the dom attribute
-        // also nativeElement.value snaps the value to the nearest step
-        // componentInstance gives us the real unsnapped binding value
         const settingsView = fixture.debugElement.query(
           By.directive(SettingsViewComponent)
         ).componentInstance as SettingsViewComponent;

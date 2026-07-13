@@ -40,10 +40,6 @@ def tensorboard_workspace(name = ""):
         actual = "@com_github_grpc_grpc//src/compiler:grpc_python_plugin",
     )
 
-    # browser_repositories registers the Chrome 122/123 binaries for all
-    # platforms via browsers-0.3.4.bzl. the old per-platform platform_archive
-    # calls that used to live here (Chrome 84) were removed because they
-    # override the newer versions when called after browser_repositories.
     browser_repositories(chromium = True)
 
     java_import_external(

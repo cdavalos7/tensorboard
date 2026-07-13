@@ -221,7 +221,6 @@ describe('scalar column editor', () => {
 
     expect(checkboxes.length).toEqual(2);
     expect(checkboxes[0].nativeElement.innerText).toEqual('Smoothed');
-    // angular 20 dropped ng-reflect attrs so we read checked from componentInstance
     expect(checkboxes[0].componentInstance.checked).toBe(true);
     expect(checkboxes[1].nativeElement.innerText).toEqual('Value');
     expect(checkboxes[1].componentInstance.checked).toBe(false);

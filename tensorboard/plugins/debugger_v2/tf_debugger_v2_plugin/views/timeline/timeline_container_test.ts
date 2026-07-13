@@ -270,7 +270,6 @@ describe('Timeline Container', () => {
           );
           expect(sliders.length).toBe(1);
           const [slider] = sliders;
-          // angular 20 dropped ng-reflect attrs so we read min and max from componentInstance
           expect(slider.componentInstance.min).toBe(0);
           expect(slider.componentInstance.max).toBe(
             numExecutions - displayCount

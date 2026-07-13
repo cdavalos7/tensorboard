@@ -160,9 +160,6 @@ describe('line_chart_v2/lib/formatter test', () => {
 
     describe('formatLong', () => {
       it('formats using localization', () => {
-        // jasmine + Angular seems to mock out the timezone by default (to UTC).
-        // chrome 123 icu upgrade changed the en-US date time separator from a
-        // comma to the word at so Jan 5 2020 at 1:23 PM instead of comma
         expect(
           wallTimeFormatter.formatLong(new Date('2020-1-5 13:23').getTime())
         ).toBe('January 5, 2020 at 1:23:00.000 PM UTC');

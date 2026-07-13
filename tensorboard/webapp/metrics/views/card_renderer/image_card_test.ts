@@ -132,7 +132,6 @@ describe('image card', () => {
     expect(
       imgEl.nativeElement.src.endsWith(`/imageData?imageId=${imageId}`)
     ).toBe(true);
-    // angular 20 dropped ng-reflect attrs so we read from nativeElement now
     expect(thumb.nativeElement.value).toBe(stepIndex?.toString());
   }
 

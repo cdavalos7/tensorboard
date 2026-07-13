@@ -156,7 +156,6 @@ describe('range input test', () => {
       });
 
       const slider = fixture.debugElement.queryAll(By.css('mat-slider'))[0];
-      // angular 20 dropped ng-reflect attrs so we read step from componentInstance
       expect(slider.componentInstance.step).toBe(0.5);
     });
   });
