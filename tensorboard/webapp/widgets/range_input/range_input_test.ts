@@ -117,6 +117,8 @@ describe('range input test', () => {
         lowerValue: 2,
         upperValue: 3,
       });
+      // MatSliderThumb sets the initial value async thru NgModel so tick is
+      // needed before nativeElement.value is ready.
       tick();
       fixture.detectChanges();
 
