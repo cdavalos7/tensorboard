@@ -1356,9 +1356,12 @@ describe('histogram test', () => {
           By.directive(CardFobControllerComponent)
         );
         const testController = cardFobDebugEl.componentInstance;
-        // Drag the fob from step 0 to step 10.
+        /*
+         * Drag the fob from step 0 to step 10.
+         * `controllerRootTop` is the top of the card fob controller host in viewport coords, the same point the component uses internally in getMousePositionFromEvent.
+         * `clientY` param is in viewport coords with 0 at the top. With mockContentRect using height 50, step 5 sits at pixel 23.75 and step 10 at 27.5 on this axis, anything above 23.75 and up to 27.5 snaps to step 10.
+         */
         const controllerRootTop =
-          // top of the card fob controller host in viewport coords, same point the component uses internally in getMousePositionFromEvent
           cardFobDebugEl.nativeElement.getBoundingClientRect().top;
         testController.startDrag(
           Fob.START,
@@ -1366,7 +1369,6 @@ describe('histogram test', () => {
           new MouseEvent('mouseDown')
         );
         const fakeEvent = new MouseEvent('mousemove', {
-          // clientY is in viewport coords with 0 at the top. with mockContentRect using height 50, step 5 sits at pixel 23.75 and step 10 at 27.5 on this axis, so anything above 23.75 and up to 27.5 snaps to step 10
           clientY: controllerRootTop + 25,
           movementY: 1, // positive value means moving down, required for isMovingHigher to pick a higher step
         });
