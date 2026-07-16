@@ -18,5 +18,17 @@
     "strictNullChecks": true,
     "target": "es5",
     "useUnknownInCatchVariables": true,
+    // See tsconfig.json for why these are disabled: @bazel/concatjs's frozen
+    // tsutils@3.21.0 tsetse rules are incompatible with TypeScript 5.9+.
+    "plugins": [
+      {
+        "name": "@bazel/tsetse",
+        // ban-promise-as-condition: normally flags using a Promise as an
+        //   if/while condition; under TS 5.9 it crashes the compiler instead.
+        // must-use-promises: normally flags an async call that is never
+        //   awaited; under TS 5.9 it wrongly flags a call that is awaited.
+        "disabledRules": ["ban-promise-as-condition", "must-use-promises"]
+      }
+    ],
   }
 }

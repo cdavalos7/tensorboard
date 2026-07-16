@@ -30,6 +30,7 @@ import sys
 exceptions = frozenset(
     [
         "patches/protobuf_6_31_1_java_export.patch",
+        "patches/@bazel+concatjs+5.8.1.patch",
     ]
 )
 
