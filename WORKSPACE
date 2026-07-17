@@ -217,17 +217,17 @@ build_bazel_rules_nodejs_dependencies()
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories", "yarn_install")
 
-# Angular 19 supports Node.js 18, 20, or 22. rules_nodejs 5.8.1
-# doesn't bundle Node 22, so we add it here manually.
+# Angular 21 supports Node.js 20.19+, 22.12+, or 24+. rules_nodejs 5.8.1
+# doesn't bundle Node 24, so we add it here manually.
 node_repositories(
     node_repositories = {
-        "22.23.1-darwin_arm64": ("node-v22.23.1-darwin-arm64.tar.gz", "node-v22.23.1-darwin-arm64", "ef28d8fab2c0e4314522d4bb1b7173270aa3937e93b92cb7de79c112ac1fa953"),
-        "22.23.1-darwin_amd64": ("node-v22.23.1-darwin-x64.tar.gz", "node-v22.23.1-darwin-x64", "b8da981b8a0b1241b70249204916da76c63573ddf5814dbd2d1e41069105cb81"),
-        "22.23.1-linux_arm64": ("node-v22.23.1-linux-arm64.tar.xz", "node-v22.23.1-linux-arm64", "0294e8b915ab75f92c7513d2fcb830ae06e10684e6c603e99a87dbf8835389c1"),
-        "22.23.1-linux_amd64": ("node-v22.23.1-linux-x64.tar.xz", "node-v22.23.1-linux-x64", "9749e988f437343b7fa832c69ded82a312e41a03116d766797ac14f6f9eee578"),
-        "22.23.1-windows_amd64": ("node-v22.23.1-win-x64.zip", "node-v22.23.1-win-x64", "7df0bc9375723f4a86b3aa1b7cc73342423d9677a8df4538aca31a049e309c29"),
+        "24.18.0-darwin_arm64": ("node-v24.18.0-darwin-arm64.tar.gz", "node-v24.18.0-darwin-arm64", "e1a97e14c99c803e96c7339403282ea05a499c32f8d83defe9ef5ec66f979ed1"),
+        "24.18.0-darwin_amd64": ("node-v24.18.0-darwin-x64.tar.gz", "node-v24.18.0-darwin-x64", "dfd0dbd3e721503434df7b7205e719f61b3a3a31b2bcf9729b8b91fea240f080"),
+        "24.18.0-linux_arm64": ("node-v24.18.0-linux-arm64.tar.xz", "node-v24.18.0-linux-arm64", "58c9520501f6ae2b52d5b210444e24b9d0c029a58c5011b797bc1fe7105886f6"),
+        "24.18.0-linux_amd64": ("node-v24.18.0-linux-x64.tar.xz", "node-v24.18.0-linux-x64", "55aa7153f9d88f28d765fcdad5ae6945b5c0f98a36881703817e4c450fa76742"),
+        "24.18.0-windows_amd64": ("node-v24.18.0-win-x64.zip", "node-v24.18.0-win-x64", "0ae68406b42d7725661da979b1403ec9926da205c6770827f33aac9d8f26e821"),
     },
-    node_version = "22.23.1",
+    node_version = "24.18.0",
 )
 
 yarn_install(
