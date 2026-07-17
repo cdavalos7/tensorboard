@@ -1379,8 +1379,8 @@ describe('scalar card', () => {
       ]);
 
       assertTooltipRows(fixture, [
-        ['', 'Row 1', '1000', '10', '1/1/20, 12:00 AM', '3 yr'],
-        ['', 'Row 2', '-1000', '1,000', '12/31/20, 12:00 AM', '0'],
+        ['', 'Row 1', '1000', '10', '1/1/20, 12:00 AM', '3 yr'],
+        ['', 'Row 2', '-1000', '1,000', '12/31/20, 12:00 AM', '0'],
       ]);
     }));
 
@@ -1446,7 +1446,7 @@ describe('scalar card', () => {
       ]);
 
       assertTooltipRows(fixture, [
-        ['', 'Row 1', '1e+7', '1e+7', '10', '1/1/20, 12:00 AM', '10 ms'],
+        ['', 'Row 1', '1e+7', '1e+7', '10', '1/1/20, 12:00 AM', '10 ms'],
         // Print the step with comma for readability. The value is yet optimize for
         // readability (we may use the scientific formatting).
         [
@@ -1455,7 +1455,7 @@ describe('scalar card', () => {
           '-5e-4',
           '-0.9312',
           '1,000',
-          '12/31/20, 12:00 AM',
+          '12/31/20, 12:00 AM',
           '5 sec',
         ],
       ]);
@@ -1530,8 +1530,8 @@ describe('scalar card', () => {
       });
 
       expect(tableContent).toEqual([
-        ['', 'Row 1', '1000', '10', '1/1/20, 12:00 AM', '10 ms'],
-        ['', 'Row 2', '-1000', '1,000', '1/5/20, 12:00 AM', '5 day'],
+        ['', 'Row 1', '1000', '10', '1/1/20, 12:00 AM', '10 ms'],
+        ['', 'Row 2', '-1000', '1,000', '1/5/20, 12:00 AM', '5 day'],
       ]);
     }));
 
