@@ -78,3 +78,17 @@ index b01c999..910a52d 100755
      module_mappings = get_module_mappings(ctx.label, ctx.attr, srcs = srcs)
  
      # To determine the path for auto-imports, TypeScript's language service
+diff --git a/node_modules/@bazel/concatjs/package.json b/node_modules/@bazel/concatjs/package.json
+index dbc7cee..1129289 100755
+--- a/node_modules/@bazel/concatjs/package.json
++++ b/node_modules/@bazel/concatjs/package.json
+@@ -24,7 +24,8 @@
+     "dependencies": {
+         "protobufjs": "6.8.8",
+         "source-map-support": "0.5.9",
+-        "tsutils": "3.21.0"
++        "tsutils": "3.21.0",
++        "typescript": "5.9.3"
+     },
+     "peerDependencies": {
+         "karma": ">=4.0.0",
