@@ -23,16 +23,10 @@
     "plugins": [
       {
         "name": "@bazel/tsetse",
-        // Both rules below are broken by @bazel/concatjs's frozen tsutils@3.21.0
-        // (predates TypeScript 5.9) manually walking the TS AST/checker in ways
-        // TS 5.9's internals no longer support. @bazel/concatjs is frozen at
-        // 5.8.1 with no newer release, so disable these two lint-only rules:
-        // - ban-promise-as-condition: typeChecker.getResolvedSignature() call
-        //   crashes ("Debug Failure... should be unreachable").
-        // - must-use-promises: tsutils.isExpressionValueUsed() false-positives
-        //   on at least one correctly-awaited call
-        //   (alert_display_snackbar_container.ts), the only usage of that
-        //   pattern in this codebase.
+        // disabled: concatjs pins tsutils to 3.21.0, which predates TS 5.9 and
+        // is incompatible with these two rules. ban-promise-as-condition
+        // crashes the compiler, must-use-promises misfires on the one
+        // awaited call in alert_display_snackbar_container.ts.
         "disabledRules": ["ban-promise-as-condition", "must-use-promises"]
       }
     ]
