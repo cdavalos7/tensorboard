@@ -13,39 +13,76 @@ After creating or updating a patch, ensure there is no trailing whitespace on
 any line (CI runs `./tensorboard/tools/whitespace_hygiene_test.py`). You can
 strip it with `sed -i '' 's/[[:space:]]*$//' patches/<patch-file>.patch`.
 
+**Important:** `patch-package` defaults to `--exclude '/package\.json$/'`, so a
+plain `yarn patch-package "<pkg>"` silently drops any changes to the package's
+`package.json`. Pass `--exclude '^$'` whenever the patch needs to modify that
+file, and always review `git diff patches/` after regenerating to confirm no
+hunk disappeared.
+
 ## `@bazel+concatjs+5.8.1.patch`
 
 **Modified files:**
-- `node_modules/@bazel/concatjs/internal/common/compilation.bzl`
-- `node_modules/@bazel/concatjs/package.json`
+* `node_modules/@bazel/concatjs/internal/common/compilation.bzl`
+* `node_modules/@bazel/concatjs/internal/common/tsconfig.bzl`
+* `node_modules/@bazel/concatjs/package.json`
 
 **What it does:**
-Updated patch from 5.7.0 to 5.8.1. This version already includes the TypeScript 5.x fix and Chrome sandbox fix that we had to patch manually in 5.7.0.
-Added typescript as a direct dependency because the Bazel sandbox can't find it otherwise.
+Three independent changes:
+
+1. `compilation.bzl` stops declaring `*.ngfactory.*` and `*.ngsummary.*` outputs
+   when `use_angular_plugin = True`. Ivy no longer emits those files, so Bazel
+   failed with "declared output was not created".
+2. `tsconfig.bzl` adds `module_roots` entries mapping each Angular, Material,
+   CDK and NgRx entry point to its `types/<name>.d.ts` file. Starting with
+   Angular 21, APF packaging exposes type definitions only through
+   `package.json` `"exports"`, which the Bazel `node_modules` path mapping
+   cannot resolve.
+3. `package.json` adds `typescript` as a direct dependency because the Bazel
+   sandbox cannot find it otherwise.
+
+Note that putting the mappings from (2) in the workspace `tsconfig.json` does not
+work: the tsconfig Bazel generates does `extends` the workspace one, but it also
+writes its own `compilerOptions.paths`, and TypeScript replaces `paths` wholesale
+instead of merging it.
 
 Why 5.8.1 and not 6.x: rules_nodejs 6.x removed most of the build rules we depend on (concatjs, esbuild, typescript, etc.) and moved them to a separate project (rules_js). This effort will be done in future upgrades.
 
+Removal is planned. `@bazel/concatjs` 5.8.1 is the last published version and
+rules_nodejs is archived, so no upstream fix is coming. The near-term plan is to
+move the `tsconfig.bzl` mappings and the `compilation.bzl` outputs override into
+a TensorBoard-owned `ts_library` rule under `tensorboard/defs`, which reuses
+concatjs `compile_ts` without patching it. See the `TODO` in the `tsconfig.bzl`
+hunk.
 
 To regenerate:
 * `vi node_modules/@bazel/concatjs/internal/common/compilation.bzl`
+* `vi node_modules/@bazel/concatjs/internal/common/tsconfig.bzl`
 * `vi node_modules/@bazel/concatjs/package.json`
 * make edits
-* `yarn patch-package "@bazel/concatjs"`
+* `yarn patch-package "@bazel/concatjs" --exclude '^$'` (the `--exclude` is
+  required, otherwise the `package.json` hunk is dropped)
 * update the WORKSPACE file with the name of the new patch file
 
 
-## `@angular+build-tooling+0.0.0-2113cd7f66a089ac0208ea84eee672b2529f4f6c.patch`
+## `@angular+build-tooling+0.0.0-98b30ab5fdeeb1df3278f5257b9a8f07abb76941.patch`
 
 **Modified files:**
-- `node_modules/@angular/build-tooling/shared-scripts/angular-optimization/BUILD.bazel`
-- `node_modules/@angular/build-tooling/shared-scripts/angular-optimization/esbuild-plugin.mjs`
+* `node_modules/@angular/build-tooling/shared-scripts/angular-optimization/esbuild-plugin.mjs`
 
 **What it does:**
-Updated for the Angular 17 version of build-tooling, adding the missing Babel dependency and
-Disables an optimization plugin that incorrectly removes function calls that Tensorboard depends on runtime.
+Disables the `markTopLevelPure` optimization plugin, which culls top-level
+function calls that TensorBoard depends on at runtime. Without this, the app
+bundles to a blank page with no console error. The resulting bundle is larger.
+
+Note the patch file name tracks the pinned `@angular/build-tooling` commit, so it
+has to be renamed (and the WORKSPACE reference updated) whenever that dependency
+is bumped.
+
+Removal is planned along with the concatjs patch. `@angular/build-tooling` is
+frozen upstream, and both patches only go away once the frontend build moves off
+rules_nodejs.
 
 To regenerate:
-* `vi node_modules/@angular/build-tooling/shared-scripts/angular-optimization/BUILD.bazel`
 * `vi node_modules/@angular/build-tooling/shared-scripts/angular-optimization/esbuild-plugin.mjs`
 * make edits
 * `yarn patch-package "@angular/build-tooling"`
