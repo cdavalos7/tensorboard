@@ -16,9 +16,9 @@ import {NgModule, provideZoneChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import '@angular/localize/init';
 import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
+  BrowserTestingModule,
+  platformBrowserTesting,
+} from '@angular/platform-browser/testing';
 
 @NgModule({
   providers: [provideZoneChangeDetection()],
@@ -26,6 +26,6 @@ import {
 class ZoneChangeDetectionTestingModule {}
 
 TestBed.initTestEnvironment(
-  [BrowserDynamicTestingModule, ZoneChangeDetectionTestingModule],
-  platformBrowserDynamicTesting()
+  [BrowserTestingModule, ZoneChangeDetectionTestingModule],
+  platformBrowserTesting()
 );
