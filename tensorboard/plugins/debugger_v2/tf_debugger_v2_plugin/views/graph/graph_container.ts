@@ -28,9 +28,9 @@ import {State} from '../../store/debugger_types';
   selector: 'tf-debugger-v2-graph',
   template: `
     <graph-component
-      [opInfo]="opInfo$ | async"
-      [inputOps]="inputOps$ | async"
-      [consumerOps]="consumerOps$ | async"
+      [opInfo]="(opInfo$ | async)!"
+      [inputOps]="(inputOps$ | async)!"
+      [consumerOps]="(consumerOps$ | async)!"
       (onGraphOpNavigate)="onGraphOpNavigate($event)"
     ></graph-component>
   `,

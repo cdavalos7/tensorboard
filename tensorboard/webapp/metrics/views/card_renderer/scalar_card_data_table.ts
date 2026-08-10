@@ -54,6 +54,11 @@ import {memoize} from '../../../util/memoize';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScalarCardDataTable {
+  // See RunsDataTable: TableData's index signature is too wide to narrow here.
+  getCellDatum(dataRow: TableData, name: string): string | number {
+    return dataRow[name] as string | number;
+  }
+
   @Input() chartMetadataMap!: ScalarCardSeriesMetadataMap;
   @Input() dataSeries!: ScalarCardDataSeries[];
   @Input() stepOrLinkedTimeSelection!: TimeSelection;

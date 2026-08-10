@@ -41,7 +41,7 @@ limitations under the License.
         cdkFocusInitial
         required
         [value]="selectedRunId || ''"
-        (change)="runSelected.emit($event.target.value)"
+        (change)="onRunSelectionChange($event)"
       >
         <option selected [value]="''">-</option>
         <!-- There is no guarantee that the run.name is unique but run.id is.-->
@@ -55,7 +55,7 @@ limitations under the License.
         [disabled]="!downloadUrlJson"
         [download]="getDownloadName('json')"
         [href]="downloadUrlJson"
-        [includeFeatureFlags]
+        [includeFeatureFlags]="true"
         >JSON</a
       >
       <a
@@ -63,7 +63,7 @@ limitations under the License.
         [disabled]="!downloadUrlCsv"
         [download]="getDownloadName('csv')"
         [href]="downloadUrlCsv"
-        [includeFeatureFlags]
+        [includeFeatureFlags]="true"
         >CSV</a
       >
     </div>

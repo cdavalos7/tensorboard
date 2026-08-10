@@ -59,12 +59,12 @@ const activePlugin = createSelector(
     <plugins-component
       [activeKnownPlugin]="activeKnownPlugin$ | async"
       [activePluginId]="activePluginId$ | async"
-      [dataLocation]="dataLocation$ | async"
-      [lastUpdated]="lastLoadedTimeInMs$ | async"
-      [pluginLoadState]="pluginLoadState$ | async"
-      [isFeatureFlagsLoaded]="isFeatureFlagsLoaded$ | async"
-      [settingsLoadState]="settingsLoadState$ | async"
-      [featureFlags]="featureFlags$ | async"
+      [dataLocation]="(dataLocation$ | async)!"
+      [lastUpdated]="(lastLoadedTimeInMs$ | async)!"
+      [pluginLoadState]="(pluginLoadState$ | async)!"
+      [isFeatureFlagsLoaded]="(isFeatureFlagsLoaded$ | async)!"
+      [settingsLoadState]="(settingsLoadState$ | async)!"
+      [featureFlags]="(featureFlags$ | async)!"
       [environmentFailureNotFoundTemplate]="environmentFailureNotFoundTemplate"
       [environmentFailurePermissionDeniedTemplate]="
         environmentFailurePermissionDeniedTemplate

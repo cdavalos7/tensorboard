@@ -49,8 +49,8 @@ const ALERT_TYPE_TO_DISPLAY_NAME_AND_SYMBOL: {
   selector: 'tf-debugger-v2-alerts',
   template: `
     <alerts-component
-      [numAlerts]="numAlerts$ | async"
-      [alertsBreakdown]="alertsBreakdown$ | async"
+      [numAlerts]="(numAlerts$ | async)!"
+      [alertsBreakdown]="(alertsBreakdown$ | async)!"
       [focusType]="focusType$ | async"
       (onToggleFocusType)="onToggleFocusType($event)"
     >

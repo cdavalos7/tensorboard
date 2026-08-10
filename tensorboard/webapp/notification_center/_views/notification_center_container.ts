@@ -33,8 +33,8 @@ const iconMap = new Map([[CategoryEnum.WHATS_NEW, 'info_outline_24px']]);
   selector: 'notification-center',
   template: `
     <notification-center-component
-      [notifications]="notificationNotes$ | async"
-      [hasUnreadMessages]="hasUnreadMessages$ | async"
+      [notifications]="(notificationNotes$ | async)!"
+      [hasUnreadMessages]="(hasUnreadMessages$ | async)!"
       (bellButtonClicked)="onBellButtonClicked()"
     ></notification-center-component>
   `,

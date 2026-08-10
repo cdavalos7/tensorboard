@@ -28,7 +28,7 @@ import {getSortedRenderableCardIdsWithMetadata} from './common_selectors';
   selector: 'metrics-card-groups',
   template: `
     <metrics-card-groups-component
-      [cardGroups]="cardGroups$ | async"
+      [cardGroups]="(cardGroups$ | async)!"
       [cardObserver]="cardObserver"
     ></metrics-card-groups-component>
   `,

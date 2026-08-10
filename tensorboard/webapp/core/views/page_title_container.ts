@@ -46,7 +46,7 @@ const DEFAULT_BRAND_NAME = 'TensorBoard';
   standalone: false,
   selector: 'page-title',
   template: `
-    <page-title-component [title]="title$ | async"></page-title-component>
+    <page-title-component [title]="(title$ | async)!"></page-title-component>
   `,
   styles: [
     `

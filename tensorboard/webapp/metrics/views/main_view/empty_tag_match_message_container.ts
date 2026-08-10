@@ -29,9 +29,9 @@ import {getSortedRenderableCardIdsWithMetadata} from './common_selectors';
   selector: 'metrics-empty-tag-match',
   template: `
     <metrics-empty-tag-match-component
-      [pluginTypes]="pluginTypes$ | async"
-      [tagFilterRegex]="tagFilterRegex$ | async"
-      [tagCounts]="tagCounts$ | async"
+      [pluginTypes]="(pluginTypes$ | async)!"
+      [tagFilterRegex]="(tagFilterRegex$ | async)!"
+      [tagCounts]="(tagCounts$ | async)!"
     ></metrics-empty-tag-match-component>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

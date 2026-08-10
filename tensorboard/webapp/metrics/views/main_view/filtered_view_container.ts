@@ -41,8 +41,8 @@ export const FILTER_VIEW_DEBOUNCE_IN_MS = 200;
   selector: 'metrics-filtered-view',
   template: `
     <metrics-filtered-view-component
-      [isEmptyMatch]="isEmptyMatch$ | async"
-      [cardIdsWithMetadata]="cardIdsWithMetadata$ | async"
+      [isEmptyMatch]="(isEmptyMatch$ | async)!"
+      [cardIdsWithMetadata]="(cardIdsWithMetadata$ | async)!"
       [cardObserver]="cardObserver"
     ></metrics-filtered-view-component>
   `,

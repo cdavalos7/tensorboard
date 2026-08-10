@@ -27,9 +27,9 @@ const UNKNOWN_DTYPE_NAME = 'Unknown dtype';
   template: `
     <execution-data-component
       [focusedExecutionIndex]="focusedExecutionIndex"
-      [focusedExecutionData]="focusedExecutionData$ | async"
-      [tensorDebugMode]="tensorDebugMode$ | async"
-      [hasDebugTensorValues]="hasDebugTensorValues$ | async"
+      [focusedExecutionData]="(focusedExecutionData$ | async)!"
+      [tensorDebugMode]="(tensorDebugMode$ | async)!"
+      [hasDebugTensorValues]="(hasDebugTensorValues$ | async)!"
       [debugTensorValues]="debugTensorValues$ | async"
       [debugTensorDtypes]="debugTensorDtypes$ | async"
     ></execution-data-component>

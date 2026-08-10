@@ -58,7 +58,9 @@ export class CardFobComponent {
     if (event.key === ' ' || isNaN(Number(charcode))) event.preventDefault();
   }
 
-  stepTyped(event: InputEvent) {
+  // Bound to both (blur) and (keydown.enter), so the argument is a FocusEvent
+  // or a KeyboardEvent, never an InputEvent. Event covers what is used here.
+  stepTyped(event: Event) {
     event.preventDefault();
     const stepString = (event.target! as HTMLInputElement).innerText;
 

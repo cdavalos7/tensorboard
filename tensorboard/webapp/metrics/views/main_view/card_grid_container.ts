@@ -38,14 +38,15 @@ import {CardIdWithMetadata} from '../metrics_view_types';
   selector: 'metrics-card-grid',
   template: `
     <metrics-card-grid-component
-      [isGroupExpanded]="isGroupExpanded$ | async"
-      [pageIndex]="normalizedPageIndex$ | async"
-      [numPages]="numPages$ | async"
-      [showPaginationControls]="showPaginationControls$ | async"
-      [cardIdsWithMetadata]="pagedItems$ | async"
+      [isGroupExpanded]="(isGroupExpanded$ | async)!"
+      [pageIndex]="(normalizedPageIndex$ | async)!"
+      [numPages]="(numPages$ | async)!"
+      [showPaginationControls]="(showPaginationControls$ | async)!"
+      [cardIdsWithMetadata]="(pagedItems$ | async)!"
       [cardMinWidth]="cardMinWidth$ | async"
       [cardObserver]="cardObserver"
-      [cardStateMap]="cardStateMap$ | async"
+      [cardStateMap]="(cardStateMap$ | async)!"
+      [groupName]="groupName"
       (pageIndexChanged)="onPageIndexChanged($event)"
     >
     </metrics-card-grid-component>

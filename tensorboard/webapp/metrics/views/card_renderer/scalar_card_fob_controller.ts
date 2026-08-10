@@ -52,7 +52,7 @@ import {MinMaxStep} from './scalar_card_types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScalarCardFobController {
-  @Input() timeSelection?: TimeSelection;
+  @Input() timeSelection?: TimeSelection | undefined;
   @Input() scale!: Scale;
   @Input() minMaxHorizontalViewExtend!: [number, number];
   @Input() minMaxStep!: MinMaxStep;
@@ -76,7 +76,7 @@ export class ScalarCardFobController {
 
   getAxisPositionFromStartStep() {
     if (!this.timeSelection) {
-      return '';
+      return 0;
     }
     return this.scale.forward(
       this.minMaxHorizontalViewExtend,

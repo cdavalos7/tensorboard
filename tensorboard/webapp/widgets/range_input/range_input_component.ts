@@ -143,7 +143,9 @@ export class RangeInputComponent {
     }
   }
 
-  handleInputChange(event: InputEvent, position: Position) {
+  // Bound to (change), which delivers a plain Event rather than an InputEvent.
+  // Only target and preventDefault are used, both of which Event provides.
+  handleInputChange(event: Event, position: Position) {
     const input = event.target! as HTMLInputElement;
     const numValue = this.getClippedValue(Number(input.value));
     if (isNaN(numValue)) {

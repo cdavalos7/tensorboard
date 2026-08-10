@@ -214,7 +214,9 @@ export class HistogramComponent implements AfterViewInit, OnChanges, OnDestroy {
     return pathBuilder.join('');
   }
 
-  trackByWallTime(datum: HistogramDatum): number {
+  // Angular invokes trackBy as (index, item); see the same fix in
+  // line_chart_axis_view.
+  trackByWallTime(index: number, datum: HistogramDatum): number {
     return datum.wallTime;
   }
 

@@ -12,13 +12,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {HttpClientModule} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {AppRootModule} from '../app_routing/app_root_module';
 import {TBHttpClient} from './tb_http_client';
 
 @NgModule({
-  imports: [HttpClientModule, AppRootModule],
-  providers: [TBHttpClient],
+  imports: [AppRootModule],
+  providers: [
+    // withInterceptorsFromDi() is required, not optional: FeatureFlagModule
+    // registers FeatureFlagHttpInterceptor through the HTTP_INTERCEPTORS
+    // token, and provideHttpClient() on its own ignores that token. Dropping
+    // it would stop the feature-flag header from being attached to every
+    // request, with no compile error and no runtime warning.
+    provideHttpClient(withInterceptorsFromDi()),
+    TBHttpClient,
+  ],
 })
 export class TBHttpClientModule {}

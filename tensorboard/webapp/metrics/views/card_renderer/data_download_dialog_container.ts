@@ -35,8 +35,8 @@ export interface DataDownloadDialogData {
   standalone: false,
   selector: 'data_download_dialog',
   template: `<data_download_dialog_component
-    [cardMetadata]="cardMetadata$ | async"
-    [runs]="runs$ | async"
+    [cardMetadata]="(cardMetadata$ | async)!"
+    [runs]="(runs$ | async)!"
     [selectedRunId]="selectedRunId$ | async"
     [downloadUrlCsv]="downloadUrlCsv$ | async"
     [downloadUrlJson]="downloadUrlJson$ | async"

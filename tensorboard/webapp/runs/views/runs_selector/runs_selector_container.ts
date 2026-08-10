@@ -24,8 +24,8 @@ import {RunsTableColumn} from '../runs_table/types';
   selector: 'runs-selector',
   template: `
     <runs-selector-component
-      [experimentIds]="experimentIds$ | async"
-      [columns]="columns$ | async"
+      [experimentIds]="(experimentIds$ | async)!"
+      [columns]="(columns$ | async)!"
     ></runs-selector-component>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

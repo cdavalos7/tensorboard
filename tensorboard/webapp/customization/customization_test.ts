@@ -15,8 +15,10 @@ limitations under the License.
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   NgModule,
   Optional,
+  Type,
 } from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {CustomizationModule} from './customization_module';
@@ -43,7 +45,13 @@ export class CustomizableComponentType {}
 })
 export class ParentComponent {
   constructor(
-    @Optional() readonly customizableComponent: CustomizableComponentType
+    // CustomizableComponentType is only an injection token here. What gets
+    // provided for it is a component class, via useValue, so the injected
+    // value is a Type rather than an instance of the marker class. The
+    // explicit @Inject is required once the annotation stops naming the token.
+    @Inject(CustomizableComponentType)
+    @Optional()
+    readonly customizableComponent: Type<unknown>
   ) {}
 }
 

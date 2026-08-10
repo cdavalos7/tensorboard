@@ -103,7 +103,7 @@ export class LineChartComponent
 
   @Input()
   customChartOverlayTemplate?: TemplateRef<
-    TemplateContext & {formatter: Formatter}
+    TemplateContext & {interactionState: InteractionState}
   >;
 
   @Input()
@@ -130,10 +130,10 @@ export class LineChartComponent
   yScaleType: ScaleType = ScaleType.LINEAR;
 
   @Input()
-  customXFormatter?: Formatter;
+  customXFormatter?: Formatter | undefined;
 
   @Input()
-  customYFormatter?: Formatter;
+  customYFormatter?: Formatter | undefined;
 
   @Input()
   tooltipTemplate?: TooltipTemplate;

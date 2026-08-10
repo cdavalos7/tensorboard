@@ -28,7 +28,7 @@ import {DarkModeOverride} from './dark_mode_toggle_component';
   selector: 'app-header-dark-mode-toggle',
   template: `
     <app-header-dark-mode-toggle-component
-      [darkModeOverride]="darkModeOverride$ | async"
+      [darkModeOverride]="(darkModeOverride$ | async)!"
       (onOverrideChanged)="changeDarkMode($event)"
     >
     </app-header-dark-mode-toggle-component>

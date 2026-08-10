@@ -29,27 +29,28 @@ index fed787a..377915a 100755
          closure_js = closure_js_files,
          devmode_js = devmode_js_files,
 diff --git a/node_modules/@bazel/concatjs/internal/common/tsconfig.bzl b/node_modules/@bazel/concatjs/internal/common/tsconfig.bzl
-index b01c999..86d61d4 100755
+index b01c999..f9684f8 100755
 --- a/node_modules/@bazel/concatjs/internal/common/tsconfig.bzl
 +++ b/node_modules/@bazel/concatjs/internal/common/tsconfig.bzl
-@@ -110,6 +110,48 @@ def create_tsconfig(
+@@ -110,6 +110,49 @@ def create_tsconfig(
              "*": node_modules_mappings,
              ctx.workspace_name + "/*": base_path_mappings,
          }
 +
-+        # Starting with Angular 21, the definition files (*.d.ts) were moved into
-+        # one folder, "types/<name>.d.ts", per package; before, we found each one
-+        # in its own corresponding folder. These are now resolved only via
-+        # package.json "exports", which Bazel's node_modules mapping can't find,
-+        # so below we map each package to their corresponding definition files.
-+        #
-+        # TODO: This patch is planned for removal. These mappings should move
-+        # into a TensorBoard-owned ts_library rule under tensorboard/defs.
++        # Starting with Angular 21, each package's *.d.ts files moved into a single
++        # "types/<name>.d.ts" folder, resolved only through package.json "exports",
++        # which Bazel's node_modules mapping cannot follow. So map each package to its
++        # definition files here. This whole patch goes away with the rules_js / rules_ts
++        # migration, which resolves "exports" natively.
 +        if node_modules_root:
 +            for pkg in [
 +                "@angular/cdk",
 +                "@angular/common",
 +                "@angular/core",
++                # TypeScript 6.0 added error TS2882 for side-effect imports whose types
++                # do not resolve, and bootstrap.ts imports "@angular/localize/init" for
++                # its side effect only.
++                "@angular/localize",
 +                "@angular/material",
 +                "@angular/platform-browser",
 +                "@angular/platform-browser-dynamic",
@@ -69,8 +70,8 @@ index b01c999..86d61d4 100755
 +                "@angular/material/icon/testing": "icon-testing",
 +                "@angular/material/menu/testing": "menu-testing",
 +                "@angular/material/select/testing": "select-testing",
-+                # @ngrx/* uses a package-name-prefixed types filename instead
-+                # of the plain "types/<entry-point>.d.ts" Angular packages use.
++                # @ngrx/* uses a package-name-prefixed types filename instead of the
++                # plain "types/<entry-point>.d.ts" that Angular packages use.
 +                "@ngrx/store/testing": "ngrx-store-testing",
 +                "@ngrx/effects/testing": "ngrx-effects-testing",
 +            }.items():
@@ -81,17 +82,37 @@ index b01c999..86d61d4 100755
      module_mappings = get_module_mappings(ctx.label, ctx.attr, srcs = srcs)
  
      # To determine the path for auto-imports, TypeScript's language service
-diff --git a/node_modules/@bazel/concatjs/package.json b/node_modules/@bazel/concatjs/package.json
-index dbc7cee..1129289 100755
---- a/node_modules/@bazel/concatjs/package.json
-+++ b/node_modules/@bazel/concatjs/package.json
-@@ -24,7 +24,8 @@
-     "dependencies": {
-         "protobufjs": "6.8.8",
-         "source-map-support": "0.5.9",
--        "tsutils": "3.21.0"
-+        "tsutils": "3.21.0",
-+        "typescript": "5.9.3"
-     },
-     "peerDependencies": {
-         "karma": ">=4.0.0",
+diff --git a/node_modules/@bazel/concatjs/internal/tsc_wrapped/tsconfig.js b/node_modules/@bazel/concatjs/internal/tsc_wrapped/tsconfig.js
+index e049d15..9ebeec4 100755
+--- a/node_modules/@bazel/concatjs/internal/tsc_wrapped/tsconfig.js
++++ b/node_modules/@bazel/concatjs/internal/tsc_wrapped/tsconfig.js
+@@ -66,6 +66,13 @@ function parseTsconfig(tsconfigFile, host = ts.sys) {
+                     : existingBazelOpts.googmodule, devmodeTargetOverride: isUndefined(existingBazelOpts.devmodeTargetOverride)
+                     ? newBazelBazelOpts.devmodeTargetOverride
+                     : existingBazelOpts.devmodeTargetOverride });
++            // Same reasoning as the bazelOptions merge above, applied to the top-level
++            // "angularCompilerOptions" block. Without this the block in the root
++            // tsconfig.json is silently dropped, because only the generated per-target
++            // tsconfig is ever inspected. The nearer config wins, like "extends" does.
++            if (config.angularCompilerOptions) {
++                mergedConfig.angularCompilerOptions = Object.assign({}, config.angularCompilerOptions, existingConfig.angularCompilerOptions || {});
++            }
+         }
+         if (config.extends) {
+             let extendedConfigPath = resolveNormalizedPath(path.dirname(configFile), config.extends);
+@@ -145,6 +152,15 @@ function parseTsconfig(tsconfigFile, host = ts.sys) {
+         bazelOpts.nodeModulesPrefix =
+             resolveNormalizedPath(options.rootDir, bazelOpts.nodeModulesPrefix);
+     }
++    // NgTscPlugin is built from bazelOptions.angularCompilerOptions, so user options
++    // carried up the extends chain above must be folded in here or the Angular compiler
++    // never sees them. The guard matters: that object already existing is what marks a
++    // target as use_angular_plugin, so creating it here would load the Angular plugin
++    // for plain ts_library targets too. Bazel's own keys win, being build mechanics
++    // rather than user choice.
++    if (bazelOpts.angularCompilerOptions && config.angularCompilerOptions) {
++        bazelOpts.angularCompilerOptions = Object.assign({}, config.angularCompilerOptions, bazelOpts.angularCompilerOptions);
++    }
+     if (bazelOpts.angularCompilerOptions && bazelOpts.angularCompilerOptions.assets) {
+         bazelOpts.angularCompilerOptions.assets = bazelOpts.angularCompilerOptions.assets.map(f => resolveNormalizedPath(options.rootDir, f));
+     }

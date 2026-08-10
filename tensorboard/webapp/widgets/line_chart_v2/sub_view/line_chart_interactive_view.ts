@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 import {
   CdkConnectedOverlay,
+  CdkOverlayOrigin,
   ConnectedPosition,
   Overlay,
   RepositionScrollStrategy,
@@ -128,12 +129,15 @@ export class LineChartInteractiveViewComponent
   domDim!: Dimension;
 
   @Input()
-  tooltipOriginEl!: ElementRef;
+  // Callers bind #overlayTarget="cdkOverlayOrigin", and this is forwarded
+  // straight to [cdkConnectedOverlayOrigin], whose input accepts a
+  // CdkOverlayOrigin. ElementRef never matched what is passed.
+  tooltipOriginEl!: CdkOverlayOrigin;
 
   @Input()
-  tooltipTemplate?: TooltipTemplate;
+  tooltipTemplate?: TooltipTemplate | undefined;
 
-  @Input() disableTooltip?: boolean;
+  @Input() disableTooltip?: boolean | undefined;
 
   @Output()
   onViewExtentChange = new EventEmitter<{dataExtent: Extent}>();

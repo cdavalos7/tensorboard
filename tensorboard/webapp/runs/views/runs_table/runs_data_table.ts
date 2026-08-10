@@ -31,6 +31,7 @@ import {
   AddColumnEvent,
 } from '../../../widgets/data_table/types';
 import {memoize} from '../../../util/memoize';
+import {ExperimentAlias} from '../../../experiments/types';
 @Component({
   standalone: false,
   selector: 'runs-data-table',
@@ -71,6 +72,21 @@ export class RunsDataTable {
   // columns. This has been known to cause problems with the controls in these columns,
   // specifically the add button.
   extendHeaders = memoize(this.internalExtendHeaders);
+
+  // TableData is a Record with a wide index signature, so a lookup by column
+  // name cannot be narrowed by the type checker. These accessors state the
+  // type each column is known to hold at runtime.
+  getCellDatum(dataRow: TableData, name: string): string | number {
+    return dataRow[name] as string | number;
+  }
+
+  getStringCell(dataRow: TableData, name: string): string {
+    return dataRow[name] as string;
+  }
+
+  getExperimentAlias(dataRow: TableData): ExperimentAlias {
+    return dataRow['experimentAlias'] as ExperimentAlias;
+  }
 
   private internalExtendHeaders(headers: ColumnHeader[]) {
     return ([] as Array<ColumnHeader>).concat(

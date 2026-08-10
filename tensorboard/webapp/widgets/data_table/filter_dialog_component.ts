@@ -58,6 +58,16 @@ export class FilterDialog {
     );
   }
 
+  // DiscreteFilterValues is a union of arrays, so calling includes() on it
+  // directly narrows the parameter to the intersection of the element types,
+  // which is never. Reading it as an array of the element union keeps the same
+  // runtime behaviour while giving the call a parameter it can accept.
+  isValueSelected(value: DiscreteFilterValue): boolean {
+    const filterValues = (this.filter as DiscreteFilter)
+      .filterValues as DiscreteFilterValue[];
+    return filterValues.includes(value);
+  }
+
   discreteValueKeyUp(event: KeyboardEvent) {
     this.discreteValueFilter = (event.target! as HTMLInputElement).value;
   }

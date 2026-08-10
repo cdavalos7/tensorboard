@@ -186,7 +186,10 @@ describe('feature_flag_dialog_container', () => {
     expect(dataCells.length).toEqual(3);
     const selectors = component.querySelectorAll('mat-select');
     expect(selectors.length).toEqual(1);
-    expect(dataCells[2].innerText).toBe('Unsupported By UI - null');
+    // The template used to read flagStatus.value, which does not exist on
+    // FeatureFlagStatus, so every unsupported flag rendered 'null'. It now
+    // reads defaultValue, which for enabledExperimentalPlugins is [].
+    expect(dataCells[2].innerText).toBe('Unsupported By UI - []');
   });
 
   describe('formatFlagValue', () => {

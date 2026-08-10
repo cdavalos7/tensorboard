@@ -53,6 +53,9 @@ export class CardGridComponent {
   @Input() cardObserver!: CardObserver;
   @Input() showPaginationControls!: boolean;
   @Input() cardStateMap!: CardStateMap;
+  // Forwarded to card-view. The container owns this value but never passed
+  // it down, so the binding in this template resolved to undefined.
+  @Input() groupName: string | null = null;
 
   @Output() pageIndexChanged = new EventEmitter<number>();
 
@@ -88,6 +91,10 @@ export class CardGridComponent {
 
   showPaginationInput(isBottomControl: boolean) {
     return isBottomControl;
+  }
+
+  handlePageChangeFromEvent(pageIndex: number, event: Event) {
+    this.handlePageChange(pageIndex, event.target as HTMLElement);
   }
 
   handlePageChange(pageIndex: number, target: HTMLElement) {

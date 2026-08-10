@@ -23,7 +23,7 @@ import {State} from '../_redux/settings_types';
   selector: 'settings-button',
   template: `
     <settings-button-component
-      [settingsLoadState]="settingsLoadState$ | async"
+      [settingsLoadState]="(settingsLoadState$ | async)!"
     ></settings-button-component>
   `,
 })

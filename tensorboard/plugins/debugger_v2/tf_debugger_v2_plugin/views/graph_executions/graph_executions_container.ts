@@ -32,9 +32,9 @@ import {State} from '../../store/debugger_types';
   selector: 'tf-debugger-v2-graph-executions',
   template: `
     <graph-executions-component
-      [numGraphExecutions]="numGraphExecutions$ | async"
-      [graphExecutionData]="graphExecutionData$ | async"
-      [graphExecutionIndices]="graphExecutionIndices$ | async"
+      [numGraphExecutions]="(numGraphExecutions$ | async)!"
+      [graphExecutionData]="(graphExecutionData$ | async)!"
+      [graphExecutionIndices]="(graphExecutionIndices$ | async)!"
       [focusIndex]="focusIndex$ | async"
       [focusInputIndices]="focusInputIndices$ | async"
       (onScrolledIndexChange)="onScrolledIndexChange($event)"

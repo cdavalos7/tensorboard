@@ -68,16 +68,16 @@ import {TimeSelectionView} from './utils';
     <scalar-card-line-chart-component
       [seriesMetadataMap]="seriesMetadataMap"
       [seriesData]="seriesData"
-      [ignoreOutliers]="ignoreOutliers$ | async"
+      [ignoreOutliers]="(ignoreOutliers$ | async)!"
       [disableUpdate]="disableUpdate"
-      [xAxisType]="xAxisType$ | async"
-      [xScaleType]="xScaleType$ | async"
+      [xAxisType]="(xAxisType$ | async)!"
+      [xScaleType]="(xScaleType$ | async)!"
       [yScaleType]="yScaleType"
-      [useDarkMode]="useDarkMode$ | async"
-      [tooltipTemplate]="tooltipTemplate"
+      [useDarkMode]="(useDarkMode$ | async)!"
+      [tooltipTemplate]="tooltipTemplate ?? null"
       [minMaxStep]="minMaxStep"
       [stepOrLinkedTimeSelection]="stepOrLinkedTimeSelection"
-      [forceSvg]="forceSvg$ | async"
+      [forceSvg]="(forceSvg$ | async)!"
       [userViewBox]="userViewBox$ | async"
       [disableTooltip]="disableTooltip"
       [allowFobRemoval]="allowFobRemoval"
@@ -110,7 +110,7 @@ export class ScalarCardLineChartContainer
       ? of(this.xAxisType)
       : this.store.select(getMetricsXAxisType);
     this.xScaleType$ = this.xAxisType
-      ? ScaleType.LINEAR
+      ? of(ScaleType.LINEAR)
       : this.store.select(getMetricsXAxisType).pipe(
           map((xAxisType) => {
             switch (xAxisType) {
@@ -137,12 +137,12 @@ export class ScalarCardLineChartContainer
   @Input() stepOrLinkedTimeSelection!: TimeSelection;
 
   @Input() xAxisType?: XAxisType;
-  @Input() yScaleType?: ScaleType = ScaleType.LINEAR;
+  @Input() yScaleType: ScaleType = ScaleType.LINEAR;
   @Input() ignoreOutliers?: boolean;
-  @Input() disableUpdate?: boolean = false;
+  @Input() disableUpdate: boolean = false;
   @Input() tooltipTemplate?: TooltipTemplate;
-  @Input() disableTooltip?: boolean = false;
-  @Input() allowFobRemoval?: boolean = true;
+  @Input() disableTooltip: boolean = false;
+  @Input() allowFobRemoval: boolean = true;
 
   @ViewChild(ScalarCardLineChartComponent)
   scalarCardLineChart?: ScalarCardLineChartComponent;
