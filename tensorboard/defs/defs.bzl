@@ -144,6 +144,11 @@ def tf_ts_library(srcs = [], strict_checks = True, **kwargs):
         tsconfig = "//:tsconfig-lax"
     kwargs.setdefault("deps", []).extend(["@npm//tslib", "//tensorboard/defs:strict_types"])
 
+    # The default ts_library compiler cannot resolve `typescript` under a sandbox.
+    # See the //tensorboard/defs:tsc_wrapped comment. tf_ng_module passes its own
+    # compiler, so setdefault leaves Angular targets alone.
+    kwargs.setdefault("compiler", "//tensorboard/defs:tsc_wrapped")
+
     new_srcs = []
 
     # Find test.ts and testbed.ts files and rename to test.spec.ts to be
