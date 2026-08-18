@@ -4,10 +4,8 @@
     "emitDecoratorMetadata": true,
     "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
-    // TypeScript 6.0 errors on options that will be removed in 7.0. Two of the three we
-    // hit ("baseUrl" and "moduleResolution=node10") are injected by @bazel/concatjs's
-    // create_tsconfig rather than set here, and concatjs 5.8.1 is frozen. Remove this
-    // once the migration to rules_js / rules_ts drops concatjs.
+    // TODO(@cdavalos): Remove this after migrating from @bazel/concatjs to rules_js/rules_ts.
+    // TypeScript 6.0 rejects deprecated options added by concatjs.
     "ignoreDeprecations": "6.0",
     "importHelpers": true,
     "inlineSourceMap": true,
@@ -28,12 +26,8 @@
     "plugins": [
       {
         "name": "@bazel/tsetse",
-        // disabled: concatjs pins tsutils to 3.21.0, which predates TS 5.9 and breaks
-        // these three rules. ban-promise-as-condition crashes the compiler,
-        // must-use-promises misfires on the one awaited call in
-        // alert_display_snackbar_container.ts, and ban-expect-truthy-promise crashes
-        // under TS 6.0 with "unionTypeParts is not a function". check-return-value
-        // stays enabled because it uses syntactic helpers, not the broken APIs.
+        // TODO(@cdavalos): Re-enable these rules after upgrading concatjs and tsutils.
+        // The current versions are incompatible with TypeScript 6.0.
         "disabledRules": [
           "ban-promise-as-condition",
           "must-use-promises",
@@ -44,10 +38,8 @@
   },
   "angularCompilerOptions": {
     "strictTemplates": true,
-    // Temporary, back to true once the containers move off AsyncPipe in the follow-up PR
-    // that restores this flag.
-    // AsyncPipe.transform is typed `T | null` whatever its source, so this check rejects
-    // all 166 `[x]="obs$ | async"` bindings.
+    // TODO(@cdavalos): Set this back to true after these containers stop using AsyncPipe
+    // for inputs. AsyncPipe can return null, so Angular currently rejects these bindings.
     "strictNullInputTypes": false
   }
 }

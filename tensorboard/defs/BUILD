@@ -50,15 +50,14 @@ ts_library(
 
 # Custom ts_library compiler for non-Angular targets.
 #
-# The generated @npm//@bazel/concatjs/bin:tsc_wrapped binary, which ts_library
-# uses by default, only carries @bazel/concatjs's own declared dependencies and
-# peer dependencies in its runfiles. `typescript` is in neither list, so
-# tsc_wrapped.js cannot `require('typescript')` once the sandbox removes the
-# execroot node_modules fallback. Clone the binary here with typescript added.
+# Bazel's generated tsc_wrapped binary needs the `typescript` package at runtime,
+# but does not include it in its runfiles. This may work locally because the
+# execroot's node_modules directory is available, but fails in the sandbox.
+# Define the binary here and add `typescript` explicitly so the compiler works
+# reliably in both local and sandboxed builds.
 #
-# Angular targets do not hit this because tsc_wrapped_with_angular below pulls
-# in @angular/compiler-cli and @bazel/typescript, which both declare typescript
-# as a peer dependency. This target keeps that from being load-bearing.
+# Angular targets use tsc_wrapped_with_angular below, which declares the Angular
+# compiler dependencies separately.
 nodejs_binary(
     name = "tsc_wrapped",
     data = [
