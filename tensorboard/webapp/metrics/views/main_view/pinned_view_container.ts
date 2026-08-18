@@ -45,9 +45,6 @@ export class PinnedViewContainer {
     this.cardIdsWithMetadata$ = this.store
       .select(getPinnedCardsWithMetadata)
       .pipe(
-        // The selector hands back a readonly array. Nothing downstream mutates
-        // it, and propagating readonly would reach every component under
-        // metrics-card-grid, so the shape is widened once here.
         map((cards) => cards as DeepReadonly<CardIdWithMetadata>[]),
         startWith([] as DeepReadonly<CardIdWithMetadata>[])
       );
@@ -59,8 +56,6 @@ export class PinnedViewContainer {
     this.globalPinsEnabled$ = this.store.select(getEnableGlobalPins);
   }
 
-  // Matches filtered_view_container: DeepReadonly applies to the element,
-  // not to the array, which would otherwise make it immutable.
   readonly cardIdsWithMetadata$: Observable<DeepReadonly<CardIdWithMetadata>[]>;
 
   readonly lastPinnedCardTime$;

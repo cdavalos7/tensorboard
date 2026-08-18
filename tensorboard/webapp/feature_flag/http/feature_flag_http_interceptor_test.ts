@@ -13,15 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+import {HttpClient, HttpHeaders, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {
-  HttpClient,
-  HttpHeaders,
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
-import {
-  provideHttpClientTesting,
+  HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
@@ -41,13 +35,8 @@ describe('FeatureFlagHttpInterceptor', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
-        // This suite does not go through TBHttpClientModule, so it has to
-        // supply HttpClient itself. withInterceptorsFromDi() is what lets the
-        // HTTP_INTERCEPTORS entry below actually run, which is the whole point
-        // of these tests.
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
         provideMockActions(() => of()),
         provideMockTbStore(),
         {

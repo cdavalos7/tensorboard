@@ -32,15 +32,8 @@ import {escapeForRegex} from '../../../util/string';
 export class MetricsFilterInputComponent {
   @Input() regexFilterValue!: string;
   @HostBinding('class.valid') @Input() isRegexFilterValid!: boolean;
-  // Fed from an async pipe, which emits null before the first value.
   @Input() completions: string[] | null = null;
   @Output() onRegexFilterValueChange = new EventEmitter<string>();
-
-  onRegexFilterInput(event: Event) {
-    this.onRegexFilterValueChange.emit(
-      (event.target as HTMLInputElement).value
-    );
-  }
 
   onCompletionAccepted(completion: string) {
     this.onRegexFilterValueChange.emit(escapeForRegex(completion));

@@ -104,10 +104,6 @@ export class LineChartAxisComponent {
     return this.customFormatter ?? this.scale.defaultFormatter;
   }
 
-  // Angular invokes trackBy as (index, item). Declaring only the item made
-  // these receive the index instead, so they read `.value`/`.start` off a
-  // number and returned undefined for every tick, defeating the tracking they
-  // were added for.
   trackByMinorTick(index: number, tick: MinorTick): number {
     return tick.value;
   }

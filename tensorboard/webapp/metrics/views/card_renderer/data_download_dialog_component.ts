@@ -49,10 +49,6 @@ export class DataDownloadDialogComponent {
   @Output()
   readonly runSelected = new EventEmitter<string>();
 
-  onRunSelectionChange(event: Event) {
-    this.runSelected.emit((event.target as HTMLSelectElement).value);
-  }
-
   readonly PluginType = PluginType;
 
   getDownloadName(type: 'json' | 'csv'): string {

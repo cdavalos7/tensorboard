@@ -45,10 +45,6 @@ export class CustomizableComponentType {}
 })
 export class ParentComponent {
   constructor(
-    // CustomizableComponentType is only an injection token here. What gets
-    // provided for it is a component class, via useValue, so the injected
-    // value is a Type rather than an instance of the marker class. The
-    // explicit @Inject is required once the annotation stops naming the token.
     @Inject(CustomizableComponentType)
     @Optional()
     readonly customizableComponent: Type<unknown>

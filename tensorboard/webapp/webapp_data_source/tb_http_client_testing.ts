@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 export {HttpTestingController} from '@angular/common/http/testing';
 
-import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NgModule} from '@angular/core';
 import {provideMockStore} from '@ngrx/store/testing';
 import {
@@ -24,12 +24,8 @@ import {
 import {TBHttpClientModule} from './tb_http_client_module';
 
 @NgModule({
-  imports: [TBHttpClientModule],
+  imports: [TBHttpClientModule, HttpClientTestingModule],
   providers: [
-    // Swaps only the backend. TBHttpClientModule still supplies HttpClient
-    // itself, along with the DI interceptors, so requests made in tests keep
-    // travelling through the same interceptor chain as production ones.
-    provideHttpClientTesting(),
     provideMockStore({
       initialState: buildFeatureFlagAppState(
         buildFeatureFlagState({

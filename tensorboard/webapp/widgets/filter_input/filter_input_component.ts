@@ -49,9 +49,6 @@ import {
 })
 export class FilterInputComponent {
   @Input() value: string = '';
-  // Callers pass a template reference resolved as ="matAutocomplete", which is
-  // a MatAutocomplete instance. The previous `string` declaration never matched
-  // what this input actually receives.
   @Input() matAutocomplete?: MatAutocomplete;
   @Input() placeholder: string = '';
 

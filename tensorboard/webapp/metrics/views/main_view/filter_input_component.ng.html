@@ -18,7 +18,7 @@ limitations under the License.
   <tb-filter-input
     placeholder="Filter tags (regex)"
     [value]="regexFilterValue"
-    (input)="onRegexFilterInput($event)"
+    (input)="onRegexFilterValueChange.emit($any($event.target).value)"
     [matAutocomplete]="filterMatches"
   ></tb-filter-input>
   <mat-icon

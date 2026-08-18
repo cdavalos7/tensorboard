@@ -71,15 +71,15 @@ limitations under the License.
           <ng-container *ngFor="let header of extendHeaders(headers)">
             <tb-data-table-content-cell
               [header]="header"
-              [datum]="getCellDatum(dataRow, header.name)"
+              [datum]="$any(dataRow[header.name])"
               [ngClass]="['table-column-' + header.name]"
             >
               <ng-container [ngSwitch]="header.name">
                 <span *ngSwitchCase="'color'" class="color-container">
                   <button
                     class="run-color-swatch"
-                    [style.background]="getStringCell(dataRow, 'color')"
-                    [colorPicker]="getStringCell(dataRow, 'color')"
+                    [style.background]="dataRow['color']"
+                    [colorPicker]="$any(dataRow['color'])"
                     [cpDialogDisplay]="'popup'"
                     [cpPositionOffset]="'-20'"
                     [cpUseRootViewContainer]="true"
@@ -95,8 +95,8 @@ limitations under the License.
                 </div>
                 <span *ngSwitchCase="'experimentAlias'">
                   <tb-experiment-alias
-                    [alias]="getExperimentAlias(dataRow)"
-                    [title]="getStringCell(dataRow, 'experimentName')"
+                    [alias]="$any(dataRow['experimentAlias'])"
+                    [title]="$any(dataRow['experimentName'])"
                   ></tb-experiment-alias>
                 </span>
               </ng-container>

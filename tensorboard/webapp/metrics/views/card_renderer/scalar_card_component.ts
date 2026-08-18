@@ -91,8 +91,6 @@ export class ScalarCardComponent<Downloader> {
 
   @Input() cardId!: string;
   @Input() chartMetadataMap!: ScalarCardSeriesMetadataMap;
-  // The store holds card state as Record<CardId, Partial<CardState>>, and the
-  // container types its observable to match, so every field here is optional.
   @Input() cardState?: Partial<CardState>;
   @Input() DataDownloadComponent!: ComponentType<Downloader>;
   @Input() dataSeries!: ScalarCardDataSeries[];
