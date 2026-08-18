@@ -31,7 +31,7 @@ import {ColumnHeader, Side, SortingInfo, SortingOrder} from './types';
 })
 export class ContextMenuComponent {
   @Input() contextMenuHeader: ColumnHeader | undefined = undefined;
-  @Input() selectableColumns?: ColumnHeader[] | undefined;
+  @Input() selectableColumns?: ColumnHeader[];
   @Input() sortingInfo!: SortingInfo;
 
   @Output() removeColumn = new EventEmitter<ColumnHeader>();

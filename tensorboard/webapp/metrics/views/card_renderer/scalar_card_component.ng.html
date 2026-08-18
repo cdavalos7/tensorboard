@@ -23,7 +23,7 @@ limitations under the License.
         value="{{ title }}"
       ></tb-truncated-path>
       <vis-linked-time-selection-warning
-        [isClipped]="!!linkedTimeSelection?.clipped"
+        [isClipped]="linkedTimeSelection && linkedTimeSelection.clipped"
       ></vis-linked-time-selection-warning>
     </span>
     <span class="controls">
@@ -199,7 +199,7 @@ limitations under the License.
     <scalar-card-data-table
       [chartMetadataMap]="chartMetadataMap"
       [dataSeries]="dataSeries"
-      [stepOrLinkedTimeSelection]="stepOrLinkedTimeSelection!"
+      [stepOrLinkedTimeSelection]="stepOrLinkedTimeSelection"
       [columnHeaders]="columnHeaders"
       [sortingInfo]="sortingInfo"
       [columnCustomizationEnabled]="columnCustomizationEnabled"

@@ -103,13 +103,13 @@ export class PluginsComponent implements OnChanges {
   lastUpdated?: number;
 
   @Input()
-  environmentFailureNotFoundTemplate?: TemplateRef<any> | undefined;
+  environmentFailureNotFoundTemplate?: TemplateRef<any>;
 
   @Input()
-  environmentFailurePermissionDeniedTemplate?: TemplateRef<any> | undefined;
+  environmentFailurePermissionDeniedTemplate?: TemplateRef<any>;
 
   @Input()
-  environmentFailureUnknownTemplate?: TemplateRef<any> | undefined;
+  environmentFailureUnknownTemplate?: TemplateRef<any>;
 
   readonly PluginLoadState = PluginLoadState;
   readonly LoadingMechanismType = LoadingMechanismType;

@@ -130,10 +130,10 @@ export class LineChartComponent
   yScaleType: ScaleType = ScaleType.LINEAR;
 
   @Input()
-  customXFormatter?: Formatter | undefined;
+  customXFormatter?: Formatter;
 
   @Input()
-  customYFormatter?: Formatter | undefined;
+  customYFormatter?: Formatter;
 
   @Input()
   tooltipTemplate?: TooltipTemplate;

@@ -23,8 +23,8 @@ limitations under the License.
         value="{{ title }}"
       ></tb-truncated-path>
       <vis-linked-time-selection-warning
-        [isClipped]="!!linkedTimeSelection?.clipped"
-        [isClosestStepHighlighted]="isClosestStepHighlighted ?? false"
+        [isClipped]="linkedTimeSelection && linkedTimeSelection.clipped"
+        [isClosestStepHighlighted]="isClosestStepHighlighted"
       ></vis-linked-time-selection-warning>
     </span>
     <span class="controls">
@@ -106,7 +106,7 @@ limitations under the License.
       alt="Image at step {{ steps[stepIndex] }}"
       src="{{ imageUrl }}"
       [ngStyle]="{'filter': cssFilter()}"
-      [includeFeatureFlags]="true"
+      [includeFeatureFlags]
     />
   </div>
 </ng-container>

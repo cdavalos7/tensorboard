@@ -129,15 +129,12 @@ export class LineChartInteractiveViewComponent
   domDim!: Dimension;
 
   @Input()
-  // Callers bind #overlayTarget="cdkOverlayOrigin", and this is forwarded
-  // straight to [cdkConnectedOverlayOrigin], whose input accepts a
-  // CdkOverlayOrigin. ElementRef never matched what is passed.
   tooltipOriginEl!: CdkOverlayOrigin;
 
   @Input()
-  tooltipTemplate?: TooltipTemplate | undefined;
+  tooltipTemplate?: TooltipTemplate;
 
-  @Input() disableTooltip?: boolean | undefined;
+  @Input() disableTooltip?: boolean;
 
   @Output()
   onViewExtentChange = new EventEmitter<{dataExtent: Extent}>();

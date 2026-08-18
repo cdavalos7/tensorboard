@@ -55,6 +55,8 @@ import {memoize} from '../../../util/memoize';
 })
 export class ScalarCardDataTable {
   // See RunsDataTable: TableData's index signature is too wide to narrow here.
+  //
+  // TODO: goes away with the same TableData fix tracked in RunsDataTable.
   getCellDatum(dataRow: TableData, name: string): string | number {
     return dataRow[name] as string | number;
   }
