@@ -31,7 +31,7 @@ import {State as DebuggerState} from '../../store/debugger_types';
     <source-files-component
       [focusedSourceFileContent]="focusedSourceFileContent$ | async"
       [focusedSourceLineSpec]="focusedSourceLineSpec$ | async"
-      [useDarkMode]="(useDarkMode$ | async)!"
+      [useDarkMode]="useDarkMode$ | async"
     ></source-files-component>
   `,
 })

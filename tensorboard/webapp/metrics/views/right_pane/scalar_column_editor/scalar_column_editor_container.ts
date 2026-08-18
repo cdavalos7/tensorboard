@@ -42,9 +42,9 @@ function headersWithoutRuns(headers: ColumnHeader[]) {
   selector: 'metrics-scalar-column-editor',
   template: `
     <metrics-scalar-column-editor-component
-      [singleHeaders]="(singleHeaders$ | async)!"
-      [rangeHeaders]="(rangeHeaders$ | async)!"
-      [selectedTab]="(selectedTab$ | async)!"
+      [singleHeaders]="singleHeaders$ | async"
+      [rangeHeaders]="rangeHeaders$ | async"
+      [selectedTab]="selectedTab$ | async"
       (onScalarTableColumnToggled)="onScalarTableColumnToggled($event)"
       (onScalarTableColumnEdit)="onScalarTableColumnEdit($event)"
       (onScalarTableColumnEditorClosed)="onScalarTableColumnEditorClosed()"

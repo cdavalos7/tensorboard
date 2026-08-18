@@ -26,7 +26,7 @@ import {FilterAddedEvent} from '../../../widgets/data_table/types';
   standalone: false,
   selector: 'filterbar',
   template: `<filterbar-component
-    [filters]="(filters$ | async)!"
+    [filters]="filters$ | async"
     (removeHparamFilter)="removeHparamFilter($event)"
     (addFilter)="addHparamFilter($event)"
   >

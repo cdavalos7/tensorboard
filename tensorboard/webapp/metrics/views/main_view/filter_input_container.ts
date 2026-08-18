@@ -30,8 +30,8 @@ import {compareTagNames} from '../../utils';
   selector: 'metrics-tag-filter',
   template: `
     <metrics-tag-filter-component
-      [regexFilterValue]="(tagFilter$ | async)!"
-      [isRegexFilterValid]="(isTagFilterRegexValid$ | async)!"
+      [regexFilterValue]="tagFilter$ | async"
+      [isRegexFilterValid]="isTagFilterRegexValid$ | async"
       [completions]="completions$ | async"
       (onRegexFilterValueChange)="onTagFilterChange($event)"
     ></metrics-tag-filter-component>

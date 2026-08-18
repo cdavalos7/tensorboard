@@ -30,7 +30,7 @@ import {getDisplayNameForRun} from './utils';
   selector: 'card-run-name',
   template: `
     <card-run-name-component
-      [name]="(name$ | async)!"
+      [name]="name$ | async"
       [attr.title]="name$ | async"
       [experimentAlias]="experimentAlias$ | async"
     ></card-run-name-component>

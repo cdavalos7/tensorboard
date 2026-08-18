@@ -29,10 +29,10 @@ import {CardIdWithMetadata} from '../metrics_view_types';
   selector: 'metrics-pinned-view',
   template: `
     <metrics-pinned-view-component
-      [cardIdsWithMetadata]="(cardIdsWithMetadata$ | async)!"
-      [lastPinnedCardTime]="(lastPinnedCardTime$ | async)!"
+      [cardIdsWithMetadata]="cardIdsWithMetadata$ | async"
+      [lastPinnedCardTime]="lastPinnedCardTime$ | async"
       [cardObserver]="cardObserver"
-      [globalPinsEnabled]="(globalPinsEnabled$ | async)!"
+      [globalPinsEnabled]="globalPinsEnabled$ | async"
       (onClearAllPinsClicked)="onClearAllPinsClicked()"
     ></metrics-pinned-view-component>
   `,

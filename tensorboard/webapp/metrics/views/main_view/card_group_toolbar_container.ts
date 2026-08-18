@@ -25,7 +25,7 @@ import {metricsTagGroupExpansionChanged} from '../../actions';
   template: `
     <metrics-card-group-toolbar-component
       [numberOfCards]="numberOfCards"
-      [isGroupExpanded]="(isGroupExpanded$ | async)!"
+      [isGroupExpanded]="isGroupExpanded$ | async"
       [groupName]="groupName"
       (groupExpansionToggled)="onGroupExpansionToggled()"
     ></metrics-card-group-toolbar-component>

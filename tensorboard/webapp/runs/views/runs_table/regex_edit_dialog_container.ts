@@ -50,10 +50,10 @@ const INPUT_CHANGE_DEBOUNCE_INTERVAL_MS = 500;
   standalone: false,
   selector: 'regex-edit-dialog',
   template: `<regex-edit-dialog-component
-    [regexString]="(groupByRegexString$ | async)!"
-    [colorRunPairList]="(colorRunPairList$ | async)!"
-    [selectedGroupBy]="(groupByRegexType$ | async)!"
-    [enableColorByExperiment]="(enableColorByExperiment$ | async)!"
+    [regexString]="groupByRegexString$ | async"
+    [colorRunPairList]="colorRunPairList$ | async"
+    [selectedGroupBy]="groupByRegexType$ | async"
+    [enableColorByExperiment]="enableColorByExperiment$ | async"
     (onSave)="onSave()"
     (regexInputOnChange)="onRegexInputOnChange($event)"
     (regexTypeOnChange)="onRegexTypeOnChange($event)"

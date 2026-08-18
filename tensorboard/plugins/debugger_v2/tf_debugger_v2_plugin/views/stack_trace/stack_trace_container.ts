@@ -35,7 +35,7 @@ import {StackFrameForDisplay} from './stack_trace_component';
       [opName]="opName$ | async"
       [executionIndex]="executionIndex$ | async"
       [stickToBottommostFrameInFocusedFile]="
-        (stickToBottommostFrameInFocusedFile$ | async)!
+        stickToBottommostFrameInFocusedFile$ | async
       "
       [stackFramesForDisplay]="stackFramesForDisplay$ | async"
       (onSourceLineClicked)="onSourceLineClicked($event)"

@@ -44,6 +44,11 @@
   },
   "angularCompilerOptions": {
     "strictTemplates": true,
+    // Temporary, back to true once the containers move off AsyncPipe in the follow-up PR
+    // that restores this flag.
+    // AsyncPipe.transform is typed `T | null` whatever its source, so this check rejects
+    // all 166 `[x]="obs$ | async"` bindings.
+    "strictNullInputTypes": false,
     // Angular 22 starts firing these two, and its changelog suggests silencing them to
     // get through the upgrade. Enabling them here ahead of the bump instead keeps the
     // cleanup separate from the version bump. Both flag a redundant "?." or "??" on an

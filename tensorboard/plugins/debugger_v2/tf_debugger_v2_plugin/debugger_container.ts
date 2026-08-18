@@ -29,8 +29,8 @@ import {State} from './store/debugger_types';
   selector: 'tf-debugger-v2',
   template: `
     <debugger-component
-      [runs]="(runs$ | async)!"
-      [runIds]="(runsIds$ | async)!"
+      [runs]="runs$ | async"
+      [runIds]="runsIds$ | async"
       [activeRunId]="activeRunId$ | async"
     ></debugger-component>
   `,

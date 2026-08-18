@@ -44,9 +44,9 @@ import {
   standalone: false,
   selector: 'feature-flag-dialog',
   template: `<feature-flag-dialog-component
-    [featureFlagStatuses]="(featureFlags$ | async)!"
-    [hasFlagsSentToServer]="(hasFlagsSentToServer$ | async)!"
-    [showFlagsFilter]="(showFlagsFilter$ | async)!"
+    [featureFlagStatuses]="featureFlags$ | async"
+    [hasFlagsSentToServer]="hasFlagsSentToServer$ | async"
+    [showFlagsFilter]="showFlagsFilter$ | async"
     (flagChanged)="onFlagChanged($event)"
     (allFlagsReset)="onAllFlagsReset()"
   ></feature-flag-dialog-component>`,

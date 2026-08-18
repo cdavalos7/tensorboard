@@ -38,11 +38,11 @@ import {PluginType} from '../../types';
   selector: 'metrics-main-view',
   template: `
     <metrics-main-view-component
-      [showFilteredView]="(showFilteredView$ | async)!"
-      [isSidepaneOpen]="(isSidepaneOpen$ | async)!"
-      [initialTagsLoading]="(initialTagsLoading$ | async)!"
-      [filteredPluginTypes]="(filteredPluginTypes$ | async)!"
-      [slideOutMenuOpen]="(isSlideoutMenuOpen$ | async)!"
+      [showFilteredView]="showFilteredView$ | async"
+      [isSidepaneOpen]="isSidepaneOpen$ | async"
+      [initialTagsLoading]="initialTagsLoading$ | async"
+      [filteredPluginTypes]="filteredPluginTypes$ | async"
+      [slideOutMenuOpen]="isSlideoutMenuOpen$ | async"
       (onSettingsButtonClicked)="onSettingsButtonClicked()"
       (onCloseSidepaneButtonClicked)="onCloseSidepaneButtonClicked()"
       (onPluginTypeToggled)="onPluginVisibilityToggled($event)"

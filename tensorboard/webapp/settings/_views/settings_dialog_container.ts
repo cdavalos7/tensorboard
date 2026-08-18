@@ -32,9 +32,9 @@ import {State} from '../_redux/settings_types';
   selector: 'settings-dialog',
   template: `
     <settings-dialog-component
-      [reloadEnabled]="(reloadEnabled$ | async)!"
-      [reloadPeriodInMs]="(reloadPeriodInMs$ | async)!"
-      [pageSize]="(pageSize$ | async)!"
+      [reloadEnabled]="reloadEnabled$ | async"
+      [reloadPeriodInMs]="reloadPeriodInMs$ | async"
+      [pageSize]="pageSize$ | async"
       (reloadToggled)="onReloadToggled()"
       (reloadPeriodInMsChanged)="onReloadPeriodInMsChanged($event)"
       (pageSizeChanged)="onPageSizeChanged($event)"

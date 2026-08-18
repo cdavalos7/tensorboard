@@ -38,10 +38,10 @@ import {GroupBy, GroupByKey} from '../../types';
   selector: 'runs-group-menu-button',
   template: `
     <runs-group-menu-button-component
-      [regexString]="(groupByRegexString$ | async)!"
-      [selectedGroupBy]="(selectedGroupBy$ | async)!"
-      [lastRegexGroupByKey]="(lastRegexGroupByKey$ | async)!"
-      [showExperimentsGroupBy]="(showExperimentsGroupBy$ | async)!"
+      [regexString]="groupByRegexString$ | async"
+      [selectedGroupBy]="selectedGroupBy$ | async"
+      [lastRegexGroupByKey]="lastRegexGroupByKey$ | async"
+      [showExperimentsGroupBy]="showExperimentsGroupBy$ | async"
       [experimentIds]="experimentIds"
       (onGroupByChange)="onGroupByChange($event)"
     ></runs-group-menu-button-component>

@@ -34,9 +34,9 @@ const getDisabledPlugins = createSelector(
   selector: 'plugin-selector',
   template: `
     <plugin-selector-component
-      [activePlugins]="(plugins$ | async)!"
-      [disabledPlugins]="(disabledPlugins$ | async)!"
-      [selectedPlugin]="(activePlugin$ | async)!"
+      [activePlugins]="plugins$ | async"
+      [disabledPlugins]="disabledPlugins$ | async"
+      [selectedPlugin]="activePlugin$ | async"
       (onPluginSelectionChanged)="onPluginSelectionChange($event)"
     ></plugin-selector-component>
   `,
