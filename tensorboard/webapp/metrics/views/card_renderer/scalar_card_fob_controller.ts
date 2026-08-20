@@ -34,7 +34,7 @@ import {MinMaxStep} from './scalar_card_types';
       [style.pointerEvents]="disableInteraction ? 'none' : 'all'"
       [axisDirection]="axisDirection"
       [timeSelection]="timeSelection"
-      [startStepAxisPosition]="getAxisPositionFromStartStep()"
+      [startStepAxisPosition]="$any(getAxisPositionFromStartStep())"
       [endStepAxisPosition]="getAxisPositionFromEndStep()"
       [prospectiveStepAxisPosition]="getAxisPositionFromProspectiveStep()"
       [highestStep]="getHighestStep()"

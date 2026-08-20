@@ -18,7 +18,7 @@ limitations under the License.
   <tb-filter-input
     placeholder="Filter tags (regex)"
     [value]="regexFilterValue"
-    (input)="onRegexFilterValueChange.emit($event.target.value)"
+    (input)="onRegexFilterValueChange.emit($any($event.target).value)"
     [matAutocomplete]="filterMatches"
   ></tb-filter-input>
   <mat-icon
@@ -40,7 +40,7 @@ limitations under the License.
     [attr.title]="completion"
     >{{ completion }}</mat-option
   >
-  <div *ngIf="completions?.length > 25" class="and-more">
-    <em>and {{completions.length - 25 | number}} more tags matched</em>
+  <div *ngIf="(completions?.length ?? 0) > 25" class="and-more">
+    <em>and {{(completions?.length ?? 0) - 25 | number}} more tags matched</em>
   </div>
 </mat-autocomplete>
