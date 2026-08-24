@@ -53,7 +53,7 @@ export class LineChartAxisComponent {
   domDim!: Dimension;
 
   @Input()
-  customFormatter?: Formatter | undefined;
+  customFormatter?: Formatter;
 
   @Output()
   onViewExtentChange = new EventEmitter<[number, number]>();

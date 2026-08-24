@@ -32,7 +32,7 @@ import {escapeForRegex} from '../../../util/string';
 export class MetricsFilterInputComponent {
   @Input() regexFilterValue!: string;
   @HostBinding('class.valid') @Input() isRegexFilterValid!: boolean;
-  @Input() completions: string[] | null = null;
+  @Input() completions!: string[];
   @Output() onRegexFilterValueChange = new EventEmitter<string>();
 
   onCompletionAccepted(completion: string) {
