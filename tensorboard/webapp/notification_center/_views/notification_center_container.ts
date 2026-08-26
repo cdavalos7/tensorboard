@@ -12,9 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {State} from '../../app_state';
 import * as actions from '../_redux/notification_center_actions';
@@ -33,19 +34,19 @@ const iconMap = new Map([[CategoryEnum.WHATS_NEW, 'info_outline_24px']]);
   selector: 'notification-center',
   template: `
     <notification-center-component
-      [notifications]="notificationNotes$ | async"
-      [hasUnreadMessages]="hasUnreadMessages$ | async"
+      [notifications]="notificationNotes()"
+      [hasUnreadMessages]="hasUnreadMessages()"
       (bellButtonClicked)="onBellButtonClicked()"
     ></notification-center-component>
   `,
 })
 export class NotificationCenterContainer {
-  readonly notificationNotes$: Observable<ViewNotificationExt[]>;
+  readonly notificationNotes: Signal<ViewNotificationExt[]>;
 
-  readonly hasUnreadMessages$;
+  readonly hasUnreadMessages: Signal<boolean>;
 
   constructor(private readonly store: Store<State>) {
-    this.notificationNotes$ = combineLatest([
+    const notificationNotes$ = combineLatest([
       this.store.select(getNotifications),
       this.store.select(getLastReadTime),
     ]).pipe(
@@ -60,10 +61,16 @@ export class NotificationCenterContainer {
       }),
       shareReplay()
     );
-    this.hasUnreadMessages$ = this.notificationNotes$.pipe(
-      map((notifications) => {
-        return notifications.some(({hasRead}) => !hasRead);
-      })
+    this.notificationNotes = toSignal(notificationNotes$, {
+      requireSync: true,
+    });
+    this.hasUnreadMessages = toSignal(
+      notificationNotes$.pipe(
+        map((notifications) => {
+          return notifications.some(({hasRead}) => !hasRead);
+        })
+      ),
+      {requireSync: true}
     );
   }
 
