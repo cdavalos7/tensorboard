@@ -12,7 +12,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component, Input, Signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Input,
+  Signal,
+} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
@@ -22,7 +28,6 @@ import {
   distinctUntilChanged,
   filter,
   map,
-  share,
   startWith,
 } from 'rxjs/operators';
 import {State} from '../../../app_state';
@@ -86,23 +91,19 @@ export class FilteredViewContainer {
             });
           }
         ),
-        share(),
         startWith([])
       ) as Observable<DeepReadonly<CardIdWithMetadata>[]>;
     this.cardIdsWithMetadata = toSignal(this.cardIdsWithMetadata$, {
       requireSync: true,
     });
-    this.isEmptyMatch = toSignal(
-      this.cardIdsWithMetadata$.pipe(
-        combineLatestWith(
-          this.store.select(getSortedRenderableCardIdsWithMetadata)
-        ),
-        map(([filteredCardList, fullCardList]) => {
-          return Boolean(fullCardList.length) && filteredCardList.length === 0;
-        })
-      ),
-      {requireSync: true}
+    const fullCardIds = this.store.selectSignal(
+      getSortedRenderableCardIdsWithMetadata
     );
+    this.isEmptyMatch = computed(() => {
+      return (
+        Boolean(fullCardIds().length) && this.cardIdsWithMetadata().length === 0
+      );
+    });
   }
 
   readonly cardIdsWithMetadata$: Observable<DeepReadonly<CardIdWithMetadata>[]>;

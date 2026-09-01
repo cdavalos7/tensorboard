@@ -12,10 +12,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal,
+} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
 import {combineLatestWith, filter, map, startWith} from 'rxjs/operators';
 import {State} from '../../../app_state';
 import {
@@ -41,22 +45,17 @@ import {compareTagNames} from '../../utils';
 })
 export class MetricsFilterInputContainer {
   constructor(private readonly store: Store<State>) {
-    this.tagFilter$ = this.store.select(getMetricsTagFilter);
     this.tagFilter = this.store.selectSignal(getMetricsTagFilter);
-    this.isTagFilterRegexValid = toSignal(
-      this.tagFilter$.pipe(
-        map((tagFilterString) => {
-          try {
-            // tslint:disable-next-line:no-unused-expression Check for validity of filter.
-            new RegExp(tagFilterString);
-            return true;
-          } catch (err) {
-            return false;
-          }
-        })
-      ),
-      {requireSync: true}
-    );
+    this.isTagFilterRegexValid = computed(() => {
+      try {
+        // Construct only to validate the regex syntax, invalid patterns throw error.
+        // tslint:disable-next-line:no-unused-expression
+        new RegExp(this.tagFilter());
+        return true;
+      } catch (err) {
+        return false;
+      }
+    });
     this.completions = toSignal(
       this.store.select(getNonEmptyCardIdsWithMetadata).pipe(
         combineLatestWith(this.store.select(getMetricsFilteredPluginTypes)),
@@ -94,7 +93,6 @@ export class MetricsFilterInputContainer {
     );
   }
 
-  readonly tagFilter$: Observable<string>;
   readonly tagFilter: Signal<string>;
 
   readonly isTagFilterRegexValid: Signal<boolean>;

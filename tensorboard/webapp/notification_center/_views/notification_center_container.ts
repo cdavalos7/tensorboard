@@ -12,11 +12,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal,
+} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
 import {combineLatest} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {State} from '../../app_state';
 import * as actions from '../_redux/notification_center_actions';
 import {
@@ -58,19 +63,13 @@ export class NotificationCenterContainer {
             icon: iconMap.get(notification.category) ?? null,
           };
         });
-      }),
-      shareReplay()
+      })
     );
     this.notificationNotes = toSignal(notificationNotes$, {
       requireSync: true,
     });
-    this.hasUnreadMessages = toSignal(
-      notificationNotes$.pipe(
-        map((notifications) => {
-          return notifications.some(({hasRead}) => !hasRead);
-        })
-      ),
-      {requireSync: true}
+    this.hasUnreadMessages = computed(() =>
+      this.notificationNotes().some(({hasRead}) => !hasRead)
     );
   }
 
