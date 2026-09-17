@@ -12,7 +12,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {alertTypeFocusToggled} from '../../actions';
 import {
@@ -63,9 +68,8 @@ export class AlertsContainer {
 
   readonly numAlerts = this.store.selectSignal(getNumAlerts);
 
-  private readonly rawAlertsBreakdown = this.store.selectSignal(
-    getAlertsBreakdown
-  );
+  private readonly rawAlertsBreakdown =
+    this.store.selectSignal(getAlertsBreakdown);
 
   readonly alertsBreakdown = computed(() => {
     const alertsBreakdown = this.rawAlertsBreakdown();
