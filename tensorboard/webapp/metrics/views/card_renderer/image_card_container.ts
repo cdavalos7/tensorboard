@@ -21,6 +21,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  signal,
   Signal,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -141,7 +142,7 @@ export class ImageCardContainer implements CardRenderer, OnInit, OnDestroy {
     );
   }
 
-  loadState!: Signal<DataLoadState>;
+  loadState: Signal<DataLoadState> = signal(DataLoadState.NOT_LOADED);
   title$?: Observable<string>;
   tag$?: Observable<string>;
   runId$?: Observable<string>;
@@ -149,9 +150,9 @@ export class ImageCardContainer implements CardRenderer, OnInit, OnDestroy {
   numSample$?: Observable<number>;
   imageUrl$?: Observable<string | null>;
   stepIndex$?: Observable<number | null>;
-  isClosestStepHighlighted!: Signal<boolean>;
-  steps!: Signal<number[]>;
-  isPinned!: Signal<boolean>;
+  isClosestStepHighlighted: Signal<boolean> = signal(false);
+  steps: Signal<number[]> = signal([]);
+  isPinned: Signal<boolean> = signal(false);
   linkedTimeSelection$?: Observable<TimeSelectionView | null>;
   selectedSteps$?: Observable<number[]>;
   readonly brightnessInMilli;

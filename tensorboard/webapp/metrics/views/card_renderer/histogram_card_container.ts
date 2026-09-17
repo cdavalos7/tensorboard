@@ -20,6 +20,7 @@ import {
   Input,
   OnInit,
   Output,
+  signal,
   Signal,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -121,7 +122,7 @@ export class HistogramCardContainer implements CardRenderer, OnInit {
   @Input() runColorScale!: RunColorScale;
   @Output() pinStateChanged = new EventEmitter<boolean>();
 
-  loadState!: Signal<DataLoadState>;
+  loadState: Signal<DataLoadState> = signal(DataLoadState.NOT_LOADED);
   title$?: Observable<string>;
   tag$?: Observable<string>;
   runId$?: Observable<string>;
@@ -129,7 +130,7 @@ export class HistogramCardContainer implements CardRenderer, OnInit {
   readonly mode;
   readonly xAxisType;
   readonly showFullWidth;
-  isPinned!: Signal<boolean>;
+  isPinned: Signal<boolean> = signal(false);
   linkedTimeSelection$?: Observable<TimeSelectionView | null>;
   isClosestStepHighlighted$?: Observable<boolean | null>;
   isTimeSelectionClipped$?: Observable<boolean>;

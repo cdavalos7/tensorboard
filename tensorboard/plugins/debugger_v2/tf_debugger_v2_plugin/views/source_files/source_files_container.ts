@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {State as OtherAppState} from '../../../../../webapp/app_state';
 import {getDarkModeEnabled} from '../../../../../webapp/selectors';
@@ -49,5 +49,5 @@ export class SourceFilesContainer {
 
   readonly focusedSourceLineSpec;
 
-  readonly useDarkMode;
+  readonly useDarkMode: Signal<boolean>;
 }

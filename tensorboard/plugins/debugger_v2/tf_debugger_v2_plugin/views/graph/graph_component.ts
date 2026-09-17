@@ -49,15 +49,18 @@ export class GraphComponent {
   /**
    * Get the ID of the immediately-enclosing graph of the op.
    */
-  get graphId() {
-    return this.opInfo!.graph_ids[this.opInfo!.graph_ids.length - 1];
+  get graphId(): string {
+    if (!this.opInfo) {
+      throw new Error('graphId is unavailable because no op is focused.');
+    }
+    return this.opInfo.graph_ids[this.opInfo.graph_ids.length - 1];
   }
 
   /**
    * Total number of consumers of all output tensors of the op.
    */
-  get totalNumConsumers() {
-    return this.consumerOps!.reduce((count, slotConsumers) => {
+  get totalNumConsumers(): number {
+    return (this.consumerOps ?? []).reduce((count, slotConsumers) => {
       return count + slotConsumers.length;
     }, 0);
   }
